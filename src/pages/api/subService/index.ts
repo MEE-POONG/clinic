@@ -12,28 +12,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const page: number = Number(req.query.page) || 1;
                 const pageSize: number = Number(req.query.pageSize) || 10;
 
-                const rightsManagements = await prisma.rightsManagement.findMany({
+                const subServices = await prisma.subService.findMany({
                     skip: (page - 1) * pageSize,
                     take: pageSize,
                 });
 
-                const totalRightsManagements = await prisma.rightsManagement.count();
-                const totalPage: number = Math.ceil(totalRightsManagements / pageSize);
-                res.status(200).json({ data: rightsManagements, page, pageSize, totalPage });
+                const totalsubServices = await prisma.subService.count();
+                const totalPage: number = Math.ceil(totalsubServices / pageSize);
+                res.status(200).json({ subServices, page, pageSize, totalPage });
             } catch (error) {
-                res.status(500).json({ error: "An error occurred while fetching the agent income systems" });
+                res.status(500).json({ error: "An error occurred while fetching the subServices" });
             }
             break;
 
         case 'POST':
             try {
-                const newRightsManagement = await prisma.rightsManagement.create({
+                const newsubService = await prisma.subService.create({
                     data: req.body,
                 });
 
-                res.status(201).json(newRightsManagement);
+                res.status(201).json(newsubService);
             } catch (error) {
-                res.status(500).json({ error: "An error occurred while creating the agent income system" });
+                res.status(500).json({ error: "An error occurred while creating the subService" });
             }
             break;
 

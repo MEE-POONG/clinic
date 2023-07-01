@@ -10,286 +10,118 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Admin {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  username    String?
-  password    String?
-  firstname   String?
-  lastname    String?
-  bankAccount String?
-  bank        String?
-  phone       String?
-  line        String?
-  nickName    String?
-  createdAt   DateTime? @default(now())
-  updatedAt   DateTime? @updatedAt
-  deleted_at  DateTime? @map("deleted_at")
+model admin {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  adminusername String?
+  adminpassword  String?
+  sex String?
+  tel String?
+  email String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  deleted_at DateTime? @map("deleted_at")
+  
+}
+model User{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  Fname String?
+  Lname String?
+  Nickname String?
+  sex String?
+  username String?
+  password String?
+  email String?
+  Line String?
+  tel String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  deleted_at DateTime? @map("deleted_at")
+
+}
+model contact {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String?
+  subtitle String?
+  detail String?
+  detail1 String?
+  picture1 String?
+  picture2 String?
+
 }
 
-model AgentIncomeSystem {
-  id              String    @id @default(auto()) @map("_id") @db.ObjectId
-  comSum          Int?
-  interestUFA     Int?
-  interestBETFLIX Int?
-  interesSum      Int?
-  percentage      Int?
-  totalLoss       Int?
-  income          Int?
-  createdAt       DateTime? @default(now())
-  updatedAt       DateTime? @updatedAt
-  deleted_at      DateTime? @map("deleted_at")
+model contactsocialmedia {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  facebook String?
+  Line String?
+  Instagram String?
+  twitter String?
+  youtube String?
 }
 
-model InvestmentUser {
+model service{
+  id String    @id @default(auto()) @map("_id") @db.ObjectId
+  title String?
+  subtitle String?
+  img String?
+  category String?
+}
+
+model subservice{
+  id String    @id @default(auto()) @map("_id") @db.ObjectId
+  title String?
+  subtitle String?
+  img String?
+  category String?
+  reviewimg String?
+  reviewdetail String?
+  price String?
+}
+
+
+model Review{
+  id String    @id @default(auto()) @map("_id") @db.ObjectId
+  title String?
+  title2 String?
+  category String?
+  subtitle String?
+  img String?
+  reviewimg String?
+  reviewdetail String?
+  reviewername String?
+  date  DateTime? 
+}
+model AboutClinic {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  username   String?
-  password   String?
+  Title      String?
+  Subtitel   String?
+  detail1    String?
+  img        String?
+  detail2    String?
+  img2       String?
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
   deleted_at DateTime? @map("deleted_at")
 }
 
-model MastertIncomeSystem {
-  id                      String    @id @default(auto()) @map("_id") @db.ObjectId
-  comSum                  Int?
-  interestUFA             Int?
-  interestBETFLIX         Int?
-  comA                    Int?
-  fullPayAgent            Int?
-  actualPayAgent          Int?
-  totalLoss               Int?
-  percentage              Int?
-  income                  Int?
-  recommendedValueUFRUU   Int?
-  recommendedValueUFRUV   Int?
-  recommendedValueUFRUV02 Int?
-  createdAt               DateTime? @default(now())
-  updatedAt               DateTime? @updatedAt
-  deleted_at              DateTime? @map("deleted_at")
-}
-
-model Member {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  username      String?
-  password      String?
-  firstname     String?
-  lastname      String?
-  bankAccount   String?
-  bank          String?
-  phone         String?
-  line          String?
-  email         String?
-  emailVerified Boolean?  @default(false)
-  createdAt     DateTime? @default(now())
-  updatedAt     DateTime? @updatedAt
-  deleted_at    DateTime? @map("deleted_at")
-  Partner Partner[]
-}
-
-model MinusIncome {
-  id              String    @id @default(auto()) @map("_id") @db.ObjectId
-  negativeBalance Int?
-  transferOverdue Int?
-  pomotion        Int?
-  investment      Int?
-  createdAt       DateTime? @default(now())
-  updatedAt       DateTime? @updatedAt
-  deleted_at      DateTime? @map("deleted_at")
-}
-
-model Partner {
-  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
-  userAG             String?
-  originAG           String?
-  percent            Int?
-  commission         Boolean?  @default(false)
-  overdue            Boolean?  @default(false)
-  adjustPercentage   Boolean?  @default(false)
-  pay                Boolean?  @default(false)
-  customerCommission Boolean?  @default(false)
-  recommender        String?
-  createdAt          DateTime? @default(now())
-  updatedAt          DateTime? @updatedAt
-  deleted_at         DateTime? @map("deleted_at")
-  memberId           String?   @db.ObjectId
-  member             Member?   @relation(fields: [memberId], references: [id])
-}
-
-model PastAG {
+model AboutPersonnel {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  online     Int?
-  comC       Int?
-  loseC      Int?
-  comM       Int?
-  loseM      Int?
+  Title      String?
+  Subtitel   String?
+  detail1    String?
+  img        String?
+  img2       String?
+  detail2    String?
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
   deleted_at DateTime? @map("deleted_at")
 }
 
-model PastBETFLIX {
+model Article {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  online     Int?
-  comC       Int?
-  loseC      Int?
-  loseM      Int?
+  Title      String?
+  img        String?
+  detail    String?
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
   deleted_at DateTime? @map("deleted_at")
 }
-
-model RightsManagement {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  page        String?
-  rightToWork String?
-  createdAt   DateTime? @default(now())
-  updatedAt   DateTime? @updatedAt
-  deleted_at  DateTime? @map("deleted_at")
-}
-
-model TransferSummary {
-  id               String    @id @default(auto()) @map("_id") @db.ObjectId
-  recommendedValue Int?
-  agentTotal       Int?
-  masterTotal      Int?
-  investment       Int?
-  createdAt        DateTime? @default(now())
-  updatedAt        DateTime? @updatedAt
-  deleted_at       DateTime? @map("deleted_at")
-}
-
-// model Member {
-//   id            String    @id @default(auto()) @map("_id") @db.ObjectId
-//   username      String?
-//   passname      String?
-//   firstname     String?
-//   lastname      String?
-//   bankAccount   String?
-//   bank          String?
-//   phone         String?
-//   line          String?
-//   email         String?
-//   emailVerified Boolean?  @default(false)
-//   createdAt     DateTime? @default(now())
-//   updatedAt     DateTime? @updatedAt
-//   deleted_at    DateTime? @map("deleted_at")
-// }
-
-// model Partner {
-//   id                 String    @id @default(auto()) @map("_id") @db.ObjectId
-//   userAG             String?
-//   originAG           String?
-//   percent            Int?
-//   commission         Boolean?  @default(false)
-//   overdue            Boolean?  @default(false)
-//   adjustPercentage   Boolean?  @default(false)
-//   pay                Boolean?  @default(false)
-//   customerCommission Boolean?  @default(false)
-//   recommender        String?
-//   createdAt          DateTime? @default(now())
-//   updatedAt          DateTime? @updatedAt
-//   deleted_at         DateTime? @map("deleted_at")
-// }
-
-// model InvestmentUser {
-//   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-//   username   String?
-//   password   String?
-//   createdAt  DateTime? @default(now())
-//   updatedAt  DateTime? @updatedAt
-//   deleted_at DateTime? @map("deleted_at")
-// }
-
-// model MinusIncome {
-//   id              String    @id @default(auto()) @map("_id") @db.ObjectId
-//   negativeBalance Int?
-//   transferOverdue Int?
-//   promotion       Int?
-//   investment      Int?
-//   createdAt       DateTime? @default(now())
-//   updatedAt       DateTime? @updatedAt
-//   deleted_at      DateTime? @map("deleted_at")
-// }
-
-// model PastAG {
-//   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-//   online     Int?
-//   comC       Int?
-//   loseC      Int?
-//   comM       Int?
-//   loseM      Int?
-//   createdAt  DateTime? @default(now())
-//   updatedAt  DateTime? @updatedAt
-//   deleted_at DateTime? @map("deleted_at")
-// }
-
-// model PastBETFLIX {
-//   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-//   online     Int?
-//   comC       Int?
-//   loseC      Int?
-//   loseM      Int?
-//   createdAt  DateTime? @default(now())
-//   updatedAt  DateTime? @updatedAt
-//   deleted_at DateTime? @map("deleted_at")
-// }
-
-// model AgentIncomeSystem {
-//   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-//   comSum     Int?
-//   percentage Int?
-//   totalLoss  Int?
-//   income     Int?
-//   createdAt  DateTime? @default(now())
-//   updatedAt  DateTime? @updatedAt
-//   deleted_at DateTime? @map("deleted_at")
-// }
-
-// model MastertIncomeSystem {
-//   id               String    @id @default(auto()) @map("_id") @db.ObjectId
-//   interest         Int?
-//   fullPayAgent     Int?
-//   actualPayAgent   Int?
-//   totalLoss        Int?
-//   percentage       Int?
-//   income           Int?
-//   recommendedValue Int?
-//   createdAt        DateTime? @default(now())
-//   updatedAt        DateTime? @updatedAt
-//   deleted_at       DateTime? @map("deleted_at")
-// }
-
-// model TransferSummary {
-//   id               String    @id @default(auto()) @map("_id") @db.ObjectId
-//   recommendedValue Int?
-//   agentTotal       Int?
-//   masterTotal      Int?
-//   createdAt        DateTime? @default(now())
-//   updatedAt        DateTime? @updatedAt
-//   deleted_at       DateTime? @map("deleted_at")
-// }
-
-// model Admin {
-//   id          String    @id @default(auto()) @map("_id") @db.ObjectId
-//   username    String?
-//   passname    String?
-//   firstname   String?
-//   lastname    String?
-//   bankAccount String?
-//   bank        String?
-//   phone       String?
-//   line        String?
-//   nickName    String?
-//   createdAt   DateTime? @default(now())
-//   updatedAt   DateTime? @updatedAt
-//   deleted_at  DateTime? @map("deleted_at")
-// }
-
-// model RightsManagement {
-//   id          String    @id @default(auto()) @map("_id") @db.ObjectId
-//   page        String?
-//   rightToWork String?
-//   createdAt   DateTime? @default(now())
-//   updatedAt   DateTime? @updatedAt
-//   deleted_at  DateTime? @map("deleted_at")
-// }

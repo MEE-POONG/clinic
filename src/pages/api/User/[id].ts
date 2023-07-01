@@ -1,4 +1,4 @@
-import { Member, PrismaClient } from "@prisma/client";
+import { User, PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient();
@@ -15,57 +15,57 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     switch (method) {
         case 'GET':
             try {
-                const member: Member | null = await prisma.member.findUnique({
+                const user: User | null = await prisma.user.findUnique({
                     where: {
                         id: String(id),
                     },
                 });
 
-                if (!member) {
-                    return res.status(404).json({ success: false, message: 'Member not found' });
+                if (!user) {
+                    return res.status(404).json({ success: false, message: 'user not found' });
                 }
 
-                res.status(200).json({ success: true, data: member });
+                res.status(200).json({ success: true, data: user });
             } catch (error) {
                 console.error(error);
-                res.status(500).json({ success: false, message: "An error occurred while fetching the member" });
+                res.status(500).json({ success: false, message: "An error occurred while fetching the user" });
             }
             break;
         case 'PUT':
-            const { username, password, firstname, lastname, bankAccount, bank, phone, line, email } = req.body;
+            const {Fname, Lname, Nickname, sex, username,password,email,Line,tel} = req.body;
 
             try {
-                const member: Member = await prisma.member.update({
+                const user: User = await prisma.user.update({
                     where: { id: String(id) },
                     data: {
+                        Fname,
+                        Lname,
+                        Nickname,
+                        sex,
                         username,
                         password,
-                        firstname,
-                        lastname,
-                        bankAccount,
-                        bank,
-                        phone,
-                        line,
                         email,
+                        Line,
+                        tel
                     },
                 });
 
-                res.status(200).json({ success: false, data: member });
+                res.status(200).json({ success: false, data: user });
             } catch (error) {
                 console.error(error);
-                res.status(500).json({ success: false, message: 'An error occurred while updating the member' });
+                res.status(500).json({ success: false, message: 'An error occurred while updating the user' });
             }
             break;
         case 'DELETE':
             try {
-                const member: Member = await prisma.member.delete({
+                const user: User = await prisma.user.delete({
                     where: { id: String(id) },
                 });
 
-                res.status(200).json({ success: false, message: 'Member deleted successfully', data: member });
+                res.status(200).json({ success: false, message: 'user deleted successfully', data: user });
             } catch (error) {
                 console.error("67 ",error);
-                res.status(500).json({ success: false, message: 'An error occurred while deleting the member' });
+                res.status(500).json({ success: false, message: 'An error occurred while deleting the user' });
             }
             break;
         default:
