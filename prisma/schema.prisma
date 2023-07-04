@@ -38,7 +38,7 @@ model User{
   deleted_at DateTime? @map("deleted_at")
 
 }
-model Contact {
+model Contactclinic {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   title String?
   subtitle String?
