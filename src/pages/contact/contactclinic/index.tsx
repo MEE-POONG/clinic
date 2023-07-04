@@ -7,25 +7,42 @@ import { Button, Card, Col,Form, Image,  Row } from "react-bootstrap";
 
 
 const Contactclinic: React.FC = () => {
-    const [{ data: ContactclinicData }, getContactclinic,] = useAxios({
-        url: `/api/contactclinic`,
-        method: "GET",
-      });
 
-      const [title, settitle] = useState([]);
-      const [subtitle, setsubtitle] = useState([]);
-      const [detail1, setdetail1] = useState([]);
-      const [detail2, setdetail2] = useState([]);
-      const [picture1, setpicture1] = useState([]);
-      const [picture2, setpicture2] = useState([]);
+  const [{ data }, ContactclinicData,] = useAxios({
+    url: `/api/contactclinic`,
+    method: "GET",
+});
+
+      const [title, settitle] = useState<string>("");
+      const [subtitle, setsubtitle] = useState<string>("");
+      const [detail1, setdetail1] = useState<string>("");
+      const [detail2, setdetail2] = useState<string>("");
+      const [picture1, setpicture1] = useState<string>("");
+      const [picture2, setpicture2] = useState<string>("");
 
       useEffect(() => {
-        if (data?.ContactclinicData?.length) {
-         console.log(data?.ContactclinicData[0])
-         
-        }
-      }, [ContactclinicData]);
+        if (data?.contactclinic?.length) {
+            console.log("33", data?.contactclinic[0])
+            
+           /* settitle(data?.contactclinic?.title || "");
+            console.log(title)
 
+            setsubtitle(data?.contactclinic?.subtitle || "");
+            console.log(subtitle)
+
+            setdetail1(data?.contactclinic?.detail1 || "");
+            console.log(detail1)
+
+            setdetail2(data?.contactclinic?.detail2 || "");
+            console.log(detail2)
+
+            setpicture1(data?.contactclinic?.picture1 || "");
+            console.log(picture1)
+
+            setpicture2(data?.contactclinic?.picture2 || "");
+            console.log(picture2)*/
+        }
+    }, [data]);
 
       
       
