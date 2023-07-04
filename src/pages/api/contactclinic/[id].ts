@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             try {
                 const id = req.query.id;
 
-                const data = await prisma.contact.findUnique({
+                const data = await prisma.contactclinic.findUnique({
                     where: {
                         id: id as string,
                     },
@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             try {
                 const id = req.query.id;
 
-                const data = await prisma.contact.update({
+                const data = await prisma.contactclinic.update({
                     where: {
                         id: id as string,
                     },
@@ -44,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             try {
                 const id = req.query.id;
 
-                const data = await prisma.contact.delete({
+                const data = await prisma.contactclinic.delete({
                     where: {
                         id: id as string,
                     },
