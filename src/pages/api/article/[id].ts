@@ -1,4 +1,4 @@
-import { admin, PrismaClient } from "@prisma/client";
+import { PrismaClient,Article  } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient();
@@ -15,53 +15,53 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     switch (method) {
         case 'GET':
             try {
-                const admin: admin | null = await prisma.admin.findUnique({
+                const article: Article | null = await prisma.article.findUnique({
                     where: {
                         id: String(id),
                     },
+                    
                 });
 
-                if (!admin) {
-                    return res.status(404).json({ success: false, message: 'admin not found' });
+                if (!article) {
+                    return res.status(404).json({ success: false, message: 'Article not found' });
                 }
 
-                res.status(200).json({ success: true, data: admin });
+                res.status(200).json({ success: true, data: article });
             } catch (error) {
                 console.error(error);
-                res.status(500).json({ success: false, message: "An error occurred while fetching the admin" });
+                res.status(500).json({ success: false, message: "An error occurred while fetching the article" });
             }
             break;
         case 'PUT':
-            const { adminusername, adminpassword, sex, tel, email} = req.body;
+            const {Title ,img ,detail} = req.body;
 
             try {
-                const admin: admin = await prisma.admin.update({
+                const article: Article = await prisma.article.update({
                     where: { id: String(id) },
                     data: {
-                        adminusername,
-                        adminpassword,
-                        sex,
-                        tel,
-                        email
+                        Title ,
+                        img,
+                        detail,
+                        
                     },
                 });
 
-                res.status(200).json({ success: false, data: admin });
+                res.status(200).json({ success: false, data: article });
             } catch (error) {
                 console.error(error);
-                res.status(500).json({ success: false, message: 'An error occurred while updating the admin' });
+                res.status(500).json({ success: false, message: 'An error occurred while updating the article' });
             }
             break;
         case 'DELETE':
             try {
-                const admin: admin = await prisma.admin.delete({
+                const article: Article = await prisma.article.delete({
                     where: { id: String(id) },
                 });
 
-                res.status(200).json({ success: false, message: 'admin deleted successfully', data: admin });
+                res.status(200).json({ success: false, message: 'Article deleted successfully', data: article });
             } catch (error) {
                 console.error("67 ",error);
-                res.status(500).json({ success: false, message: 'An error occurred while deleting the admin' });
+                res.status(500).json({ success: false, message: 'An error occurred while deleting the article' });
             }
             break;
         default:

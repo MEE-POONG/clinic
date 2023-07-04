@@ -102,6 +102,32 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
 
                         </Dropdown.Menu>
                     </div>
+
+
+
+
+                    <div id="About" className='select-page'>
+                        <Dropdown.Toggle onClick={() => handlePath('/About')} className={asPath === "/About" || asPath === "/About/AboutClinic" || asPath === "/About/AboutPersonnel" || asPath === "/About/AboutPersonnel/add" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
+                            <i >
+                                <FaTachometerAlt />
+                            </i>
+                            <span className="ms-2">About</span>
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/About" || checkClickPath === "/About/AboutClinic" || checkClickPath === "/About/AboutPersonnel" || asPath === "/About/AboutPersonnel/add"} >
+                            <Link href="/About/AboutClinic" className={asPath === "/About" || asPath === "/About/AboutClinic" ? "nav-link active" : "nav-link"}>
+                                <span>AboutClinic</span>
+                            </Link>
+                            <Link href="/About/AboutPersonnel" className={asPath === "/About/AboutPersonnel" || asPath === "/About/AboutPersonnel/add" ? "nav-link active" : "nav-link"}>
+                                <span>AboutPersonnel</span>
+                            </Link>
+                        </Dropdown.Menu>
+                    </div>
+
+
+
+
+
                 </Offcanvas.Body>
             </Offcanvas>
 

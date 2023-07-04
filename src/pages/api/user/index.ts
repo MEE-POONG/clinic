@@ -6,7 +6,7 @@ export default async function handler(req:any, res:any) {
     switch (method) {
         case 'GET':
             try {
-                const data = await prisma.admin.findMany({});
+                const data = await prisma.user.findMany({});
                 res.status(200).json(data)
             } catch (error) {
                 res.status(400).json({ success: false })
@@ -14,20 +14,24 @@ export default async function handler(req:any, res:any) {
             break
             
             case 'POST':
-            const { adminusername, adminpassword, sex, tel, email} = req.body;
+            const { Fname, Lname, Nickname, sex, username,password,email,Line,tel} = req.body;
             try {
-                const newPartner = await prisma.admin.create({
+                const newPartner = await prisma.user.create({
                     data: {
-                       adminusername,
-                       adminpassword,
-                       sex,
-                       tel,
-                       email
+                        Fname,
+                        Lname,
+                        Nickname,
+                        sex,
+                        username,
+                        password,
+                        email,
+                        Line,
+                        tel
                     },
                 });
                 res.status(201).json({ success: true, data: newPartner });
             } catch (error) {
-                res.status(500).json({ success: true, message: "An error occurred while creating the admin" });
+                res.status(500).json({ success: true, message: "An error occurred while creating the User" });
             }
             break;
 
