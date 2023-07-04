@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
+import  useAxios from "axios-hooks";
 import { Button, Card, Col,Form, Image,  Row } from "react-bootstrap";
 
+
+
 const Contactclinic: React.FC = () => {
+    const [{ data: membersData }, getMember,] = useAxios({
+        url: `/api/contactclinic`,
+        method: "GET",
+      });
+
+    const [title, settitle] = useState<title[0]>([]);
+
+    
+
+
+
+
+
+
+
+
+
+
   return (
     <LayOut>
       <Head>
