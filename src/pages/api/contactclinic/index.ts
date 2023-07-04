@@ -12,28 +12,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const page: number = Number(req.query.page) || 1;
                 const pageSize: number = Number(req.query.pageSize) || 10;
 
-                const contacts = await prisma.contactclinic.findMany({
+                const contactclinicclinic = await prisma.contactclinic.findMany({
                     skip: (page - 1) * pageSize,
                     take: pageSize,
                 });
 
-                const totalcontacts = await prisma.contactclinic.count();
-                const totalPage: number = Math.ceil(totalcontacts / pageSize);
-                res.status(200).json({ contacts, page, pageSize, totalPage });
+                const totalcontactclinics = await prisma.contactclinic.count();
+                const totalPage: number = Math.ceil(totalcontactclinics / pageSize);
+                res.status(200).json({ contactclinicclinic, page, pageSize, totalPage });
             } catch (error) {
-                res.status(500).json({ error: "An error occurred while fetching the contacts" });
+                res.status(500).json({ error: "An error occurred while fetching the contactclinics" });
             }
             break;
 
         case 'POST':
             try {
-                const newcontact = await prisma.contactclinic.create({
+                const newcontactclinic = await prisma.contactclinic.create({
                     data: req.body,
                 });
 
-                res.status(201).json(newcontact);
+                res.status(201).json(newcontactclinic);
             } catch (error) {
-                res.status(500).json({ error: "An error occurred while creating the contact" });
+                res.status(500).json({ error: "An error occurred while creating the contactclinic" });
             }
             break;
 
