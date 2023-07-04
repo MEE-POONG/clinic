@@ -1,43 +1,44 @@
-import { PrismaClient } from "@prisma/client"
-const prisma = new PrismaClient()
+import { PrismaClient , Admin } from "@prisma/client";
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handler(req:any, res:any) {
-    const { method } = req
+const prisma = new PrismaClient();
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    const { method } = req;
+
     switch (method) {
         case 'GET':
             try {
-                const data = await prisma.admin.findMany({});
-                res.status(200).json(data)
-            } catch (error) {
-                res.status(400).json({ success: false })
-            }
-            break
-            
-            case 'POST':
-            const { adminusername, adminpassword, sex, tel, email} = req.body;
-            try {
-                const newPartner = await prisma.admin.create({
-                    data: {
-                       adminusername,
-                       adminpassword,
-                       sex,
-                       tel,
-                       email
-                    },
+                const page: number = Number(req.query.page) || 1;
+                const pageSize: number = Number(req.query.pageSize) || 10;
+
+                const admins = await prisma.admin.findMany({
+                    skip: (page - 1) * pageSize,
+                    take: pageSize,
                 });
-                res.status(201).json({ success: true, data: newPartner });
+
+                const totaladmins = await prisma.admin.count();
+                const totalPage: number = Math.ceil(totaladmins / pageSize);
+                res.status(200).json({ admins, page, pageSize, totalPage });
             } catch (error) {
-                res.status(500).json({ success: true, message: "An error occurred while creating the admin" });
+                res.status(500).json({ error: "An error occurred while fetching the admins" });
             }
             break;
 
-            
+        case 'POST':
+            try {
+                const newadmin = await prisma.admin.create({
+                    data: req.body,
+                });
 
+                res.status(201).json(newadmin);
+            } catch (error) {
+                res.status(500).json({ error: "An error occurred while creating the admin" });
+            }
+            break;
 
         default:
-            res.setHeader('Allow', ['GET', 'PUT'])
-            res.status(405).end(`Method ${method} Not Allowed`)
+            res.setHeader('Allow', ['GET', 'POST']);
+            res.status(405).end(`Method ${method} Not Allowed`);
     }
 }
-
-
