@@ -20,10 +20,21 @@ const Contactclinic: React.FC = () => {
       const [picture2, setpicture2] = useState([]);
 
       useEffect(() => {
-        settitle(ContactclinicData?.data ?? []);
-        console.log(ContactclinicData);
-    
+        if (data?.ContactclinicData?.length) {
+         console.log(data?.ContactclinicData[0])
+         
+        }
       }, [ContactclinicData]);
+
+
+      
+      
+      
+      
+      
+      
+      
+      
 
     
 
