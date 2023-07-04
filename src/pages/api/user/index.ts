@@ -1,47 +1,44 @@
-import { PrismaClient } from "@prisma/client"
-const prisma = new PrismaClient()
+import { PrismaClient } from "@prisma/client";
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handler(req:any, res:any) {
-    const { method } = req
+const prisma = new PrismaClient();
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    const { method } = req;
+
     switch (method) {
         case 'GET':
             try {
-                const data = await prisma.user.findMany({});
-                res.status(200).json(data)
-            } catch (error) {
-                res.status(400).json({ success: false })
-            }
-            break
-            
-            case 'POST':
-            const { Fname, Lname, Nickname, sex, username,password,email,Line,tel} = req.body;
-            try {
-                const newPartner = await prisma.user.create({
-                    data: {
-                        Fname,
-                        Lname,
-                        Nickname,
-                        sex,
-                        username,
-                        password,
-                        email,
-                        Line,
-                        tel
-                    },
+                const page: number = Number(req.query.page) || 1;
+                const pageSize: number = Number(req.query.pageSize) || 10;
+
+                const users = await prisma.user.findMany({
+                    skip: (page - 1) * pageSize,
+                    take: pageSize,
                 });
-                res.status(201).json({ success: true, data: newPartner });
+
+                const totalusers = await prisma.user.count();
+                const totalPage: number = Math.ceil(totalusers / pageSize);
+                res.status(200).json({ users, page, pageSize, totalPage });
             } catch (error) {
-                res.status(500).json({ success: true, message: "An error occurred while creating the User" });
+                res.status(500).json({ error: "An error occurred while fetching the users" });
             }
             break;
 
-            
+        case 'POST':
+            try {
+                const newuser = await prisma.user.create({
+                    data: req.body,
+                });
 
+                res.status(201).json(newuser);
+            } catch (error) {
+                res.status(500).json({ error: "An error occurred while creating the user" });
+            }
+            break;
 
         default:
-            res.setHeader('Allow', ['GET', 'PUT'])
-            res.status(405).end(`Method ${method} Not Allowed`)
+            res.setHeader('Allow', ['GET', 'POST']);
+            res.status(405).end(`Method ${method} Not Allowed`);
     }
 }
-
-
