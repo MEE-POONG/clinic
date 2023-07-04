@@ -34,19 +34,8 @@ const Contactclinic: React.FC = () => {
       
       
       
-      
 
-    
-
-
-
-
-
-
-
-
-
-
+  
   return (
     <LayOut>
       <Head>
