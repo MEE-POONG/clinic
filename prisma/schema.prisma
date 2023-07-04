@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model admin {
+model Admin {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   adminusername String?
   adminpassword  String?
@@ -24,21 +24,21 @@ model admin {
 }
 model User{
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  Fname String?
-  Lname String?
-  Nickname String?
+  fname String?
+  lname String?
+  nickname String?
   sex String?
   username String?
   password String?
   email String?
-  Line String?
+  line String?
   tel String?
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
   deleted_at DateTime? @map("deleted_at")
 
 }
-model contact {
+model Contact {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   title String?
   subtitle String?
@@ -49,16 +49,16 @@ model contact {
 
 }
 
-model contactsocialmedia {
+model ContactSocialMedia {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   facebook String?
-  Line String?
-  Instagram String?
+  line String?
+  instagram String?
   twitter String?
   youtube String?
 }
 
-model service{
+model Service{
   id String    @id @default(auto()) @map("_id") @db.ObjectId
   title String?
   subtitle String?
@@ -135,19 +135,19 @@ model Article {
 }
 
 
-model Admin {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  adminusername String?
-  adminpassword  String?
-  sex String?
-  tel String?
-  email String?
-  createdAt  DateTime? @default(now())
-  updatedAt  DateTime? @updatedAt
-  deleted_at DateTime? @map("deleted_at")
+// model Admin {
+//   id String @id @default(auto()) @map("_id") @db.ObjectId
+//   adminusername String?
+//   adminpassword  String?
+//   sex String?
+//   tel String?
+//   email String?
+//   createdAt  DateTime? @default(now())
+//   updatedAt  DateTime? @updatedAt
+//   deleted_at DateTime? @map("deleted_at")
   // user  User[]
 
-}
+// }
 // model User{
 //   id String @id @default(auto()) @map("_id") @db.ObjectId
 //   fname String?
