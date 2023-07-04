@@ -1,44 +1,44 @@
-import { PrismaClient } from "@prisma/client"
-const prisma = new PrismaClient()
+import { PrismaClient , Contact } from "@prisma/client";
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handler(req:any, res:any) {
-    const { method } = req
+const prisma = new PrismaClient();
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    const { method } = req;
+
     switch (method) {
         case 'GET':
             try {
-                const data = await prisma.contact.findMany({});
-                res.status(200).json(data)
-            } catch (error) {
-                res.status(400).json({ success: false })
-            }
-            break
-            
-            case 'POST':
-            const { title,subtitle,detail,detail1,picture1,picture2} = req.body;
-            try {
-                const newPartner = await prisma.contact.create({
-                    data: {
-                        title,
-                        subtitle,
-                        detail,
-                        detail1,
-                        picture1,
-                        picture2
-                    },
+                const page: number = Number(req.query.page) || 1;
+                const pageSize: number = Number(req.query.pageSize) || 10;
+
+                const contacts = await prisma.contact.findMany({
+                    skip: (page - 1) * pageSize,
+                    take: pageSize,
                 });
-                res.status(201).json({ success: true, data: newPartner });
+
+                const totalcontacts = await prisma.contact.count();
+                const totalPage: number = Math.ceil(totalcontacts / pageSize);
+                res.status(200).json({ contacts, page, pageSize, totalPage });
             } catch (error) {
-                res.status(500).json({ success: true, message: "An error occurred while creating the contact" });
+                res.status(500).json({ error: "An error occurred while fetching the contacts" });
             }
             break;
 
-            
+        case 'POST':
+            try {
+                const newcontact = await prisma.contact.create({
+                    data: req.body,
+                });
 
+                res.status(201).json(newcontact);
+            } catch (error) {
+                res.status(500).json({ error: "An error occurred while creating the contact" });
+            }
+            break;
 
         default:
-            res.setHeader('Allow', ['GET', 'PUT'])
-            res.status(405).end(`Method ${method} Not Allowed`)
+            res.setHeader('Allow', ['GET', 'POST']);
+            res.status(405).end(`Method ${method} Not Allowed`);
     }
 }
-
-
