@@ -126,7 +126,7 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
 
 
                     <div id="About" className='select-page'>
-                        <Dropdown.Toggle onClick={() => handlePath('/contact')} className={asPath === "/contact" || asPath === "/contact/contactclinic" || asPath === "/contact/contactclinic" || asPath === "/contact/contactclinic/add" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
+                        <Dropdown.Toggle onClick={() => handlePath('/contact')} className={asPath === "/contact" || asPath === "/contact/contactclinic" || asPath === "/contact/ContactSocialMedia" || asPath === "/contact/ContactSocialMedia/add" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
                             <i >
                                 <FaTachometerAlt />
                             </i>
