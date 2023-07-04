@@ -1,39 +1,44 @@
-import { PrismaClient, AboutPersonnel } from '@prisma/client';
-const prisma = new PrismaClient()
+import { PrismaClient , AboutPersonal } from "@prisma/client";
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handler(req: any, res: any) {
-    const { method } = req
+const prisma = new PrismaClient();
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    const { method } = req;
+
     switch (method) {
         case 'GET':
             try {
-                const data = await prisma.aboutPersonnel.findMany({
-                    
+                const page: number = Number(req.query.page) || 1;
+                const pageSize: number = Number(req.query.pageSize) || 10;
+
+                const aboutpersonals = await prisma.aboutPersonal.findMany({
+                    skip: (page - 1) * pageSize,
+                    take: pageSize,
                 });
-                res.status(200).json(data)
+
+                const totalaboutpersonals = await prisma.aboutPersonal.count();
+                const totalPage: number = Math.ceil(totalaboutpersonals / pageSize);
+                res.status(200).json({ aboutpersonals, page, pageSize, totalPage });
             } catch (error) {
-                res.status(400).json({ success: false })
-            }
-            break
-        case 'POST':
-            const {Title ,Subtitel,detail1,img,detail2,img2,}= req.body;
-            try {
-                const newAboutPersonnel = await prisma.aboutPersonnel.create({
-                    data: {
-                        Title ,
-                        Subtitel,
-                        detail1,
-                        img,
-                        detail2,
-                        img2,
-                    },
-                });
-                res.status(201).json({ success: true, data: newAboutPersonnel });
-            } catch (error) {
-                res.status(500).json({ success: true, message: "An error occurred while creating the aboutpersonnel" });
+                res.status(500).json({ error: "An error occurred while fetching the aboutpersonals" });
             }
             break;
+
+        case 'POST':
+            try {
+                const newaboutpersonal = await prisma.aboutPersonal.create({
+                    data: req.body,
+                });
+
+                res.status(201).json(newaboutpersonal);
+            } catch (error) {
+                res.status(500).json({ error: "An error occurred while creating the aboutpersonal" });
+            }
+            break;
+
         default:
-            res.setHeader('Allow', ['GET','POST'])
-            res.status(405).end(`Method ${method} Not Allowed`)
+            res.setHeader('Allow', ['GET', 'POST']);
+            res.status(405).end(`Method ${method} Not Allowed`);
     }
 }
