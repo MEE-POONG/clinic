@@ -4,6 +4,7 @@ import { FaBars, FaRegEnvelope, FaShoppingBag, FaTachometerAlt, FaUserEdit } fro
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { ContactSocialMedia, AboutClinic } from '@prisma/client';
 
 interface TheOffcanvasProps {
     show: boolean;
@@ -125,7 +126,10 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                     </div>
 
 
-                    <div id="About" className='select-page'>
+
+
+
+                    <div id="Contact" className='select-page'>
                         <Dropdown.Toggle onClick={() => handlePath('/contact')} className={asPath === "/contact" || asPath === "/contact/contactclinic" || asPath === "/contact/ContactSocialMedia" || asPath === "/contact/ContactSocialMedia/add" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
                             <i >
                                 <FaTachometerAlt />
@@ -133,15 +137,17 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                             <span className="ms-2">Contact</span>
                         </Dropdown.Toggle>
 
-                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/About" || checkClickPath === "/About/AboutClinic" || checkClickPath === "/About/AboutPersonnel" || asPath === "/About/AboutPersonnel/add"} >
+                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/contact" || checkClickPath === "/contact/contactclinic" || checkClickPath === "/contact/ContactSocialMedia" || asPath === "/contact/ContactSocialMedia/add"} >
                             <Link href="/contact/contactclinic" className={asPath === "/contact" || asPath === "/contact/contactclinic" ? "nav-link active" : "nav-link"}>
-                                <span>AboutClinic</span>
+                                <span>ContactClinic</span>
                             </Link>
                             <Link href="/contact/ContactSocialMedia" className={asPath === "/contact/ContactSocialMedia" || asPath === "/contact/ContactSocialMedia/add" ? "nav-link active" : "nav-link"}>
-                                <span>AboutPersonnel</span>
+                                <span>ContactSocialMedia</span>
                             </Link>
                         </Dropdown.Menu>
                     </div>
+
+                   
 
 
 
