@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             try {
                 const id = req.query.id;
 
-                const data = await prisma.aboutPersonal.findUnique({
+                const data = await prisma.aboutPersonnel.findUnique({
                     where: {
                         id: id as string,
                     },
@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             try {
                 const id = req.query.id;
 
-                const data = await prisma.aboutPersonal.update({
+                const data = await prisma.aboutPersonnel.update({
                     where: {
                         id: id as string,
                     },
@@ -44,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             try {
                 const id = req.query.id;
 
-                const data = await prisma.aboutPersonal.delete({
+                const data = await prisma.aboutPersonnel.delete({
                     where: {
                         id: id as string,
                     },
