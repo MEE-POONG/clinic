@@ -58,7 +58,7 @@ model ContactSocialMedia {
   youtube String?
 }
 
-model Service{
+model Serviceclinic{
   id String    @id @default(auto()) @map("_id") @db.ObjectId
   title String?
   subtitle String?

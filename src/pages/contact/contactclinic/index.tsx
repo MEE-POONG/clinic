@@ -35,17 +35,17 @@ const Contactclinic: React.FC = () => {
           <Card.Body>
             <Row>
               <Col lg="3" className="text-center">
-                <Image src="./images/logo-default.png" width={'200px'} className="m-3" alt="logo" />
+                <Image src="./images/logo-default.png" width={'200px'} className="m-3" alt="picture1" />
                 <div className="d-flex justify-content-center">
                   <div className="btn btn-primary btn-rounded">
-                    <label className="form-label text-white m-1" htmlFor="customFile1">Logo</label>
+                    <label className="form-label text-white m-1" htmlFor="customFile1">picture1</label>
                     <input type="file" className="form-control d-none" id="customFile1" />
                   </div>
                 </div>
-                <Image src="./images/logo-default.png" width={'200px'} className="m-3" alt="QR Code" />
+                <Image src="./images/logo-default.png" width={'200px'} className="m-3" alt="picture2" />
                 <div className="d-flex justify-content-center">
                   <div className="btn btn-primary btn-rounded">
-                    <label className="form-label text-white m-1" htmlFor="customFile1">QR Code Line</label>
+                    <label className="form-label text-white m-1" htmlFor="customFile1">picture2</label>
                     <input type="file" className="form-control d-none" id="customFile1" />
                   </div>
                 </div>
@@ -54,26 +54,26 @@ const Contactclinic: React.FC = () => {
                 <Row>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>Web Play</Form.Label>
-                      <Form.Control type="text" placeholder="Link Web" />
+                      <Form.Label>title</Form.Label>
+                      <Form.Control type="text" placeholder="title" />
                     </Form.Group>
                   </Col>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>Web Partner</Form.Label>
-                      <Form.Control type="text" placeholder="Link Web" />
+                      <Form.Label>subtitle</Form.Label>
+                      <Form.Control type="text" placeholder="subtitle" />
                     </Form.Group>
                   </Col>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>Line ID</Form.Label>
-                      <Form.Control type="text" placeholder="Line ID" />
+                      <Form.Label>detail1</Form.Label>
+                      <Form.Control type="text" placeholder="detail1" />
                     </Form.Group>
                   </Col>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>Line Link</Form.Label>
-                      <Form.Control type="text" placeholder="Link Line" />
+                      <Form.Label>detail2</Form.Label>
+                      <Form.Control type="text" placeholder="detail2" />
                     </Form.Group>
                   </Col>
                 </Row>
