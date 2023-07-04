@@ -1,9 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
+import  useAxios from "axios-hooks";
 import { Button, Card, Col,Form, Image,  Row } from "react-bootstrap";
 
+
+
 const Contactclinic: React.FC = () => {
+    const [{ data: ContactclinicData }, getContactclinic,] = useAxios({
+        url: `/api/contactclinic`,
+        method: "GET",
+      });
+
+      const [title, settitle] = useState([]);
+      const [subtitle, setsubtitle] = useState([]);
+      const [detail1, setdetail1] = useState([]);
+      const [detail2, setdetail2] = useState([]);
+      const [picture1, setpicture1] = useState([]);
+      const [picture2, setpicture2] = useState([]);
+
+      useEffect(() => {
+        if (data?.ContactclinicData?.length) {
+         console.log(data?.ContactclinicData[0])
+         
+        }
+      }, [ContactclinicData]);
+
+
+      
+      
+      
+      
+      
+      
+      
+      
+
+    
+
+
+
+
+
+
+
+
+
+
   return (
     <LayOut>
       <Head>

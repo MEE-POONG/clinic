@@ -1,4 +1,4 @@
-import { PrismaClient , Contact } from "@prisma/client";
+import { PrismaClient , Contactclinic } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient();
@@ -12,12 +12,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const page: number = Number(req.query.page) || 1;
                 const pageSize: number = Number(req.query.pageSize) || 10;
 
-                const contacts = await prisma.contact.findMany({
+                const contacts = await prisma.contactclinic.findMany({
                     skip: (page - 1) * pageSize,
                     take: pageSize,
                 });
 
-                const totalcontacts = await prisma.contact.count();
+                const totalcontacts = await prisma.contactclinic.count();
                 const totalPage: number = Math.ceil(totalcontacts / pageSize);
                 res.status(200).json({ contacts, page, pageSize, totalPage });
             } catch (error) {
@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         case 'POST':
             try {
-                const newcontact = await prisma.contact.create({
+                const newcontact = await prisma.contactclinic.create({
                     data: req.body,
                 });
 
