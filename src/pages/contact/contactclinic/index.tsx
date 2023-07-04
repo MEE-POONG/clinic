@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
-import  useAxios from "axios-hooks";
 import { Button, Card, Col,Form, Image,  Row } from "react-bootstrap";
-
+import EditModal from "@/components/modal/EditModal";
+import useAxios from "axios-hooks";
+import Link from "next/link";
+import { Contactclinic } from '@prisma/client';
 
 
 const Contactclinic: React.FC = () => {
