@@ -10,10 +10,58 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Service{
+model admin {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  adminusername String?
+  adminpassword  String?
+  sex String?
+  tel String?
+  email String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  deleted_at DateTime? @map("deleted_at")
+  
+}
+model User{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  Fname String?
+  Lname String?
+  Nickname String?
+  sex String?
+  username String?
+  password String?
+  email String?
+  Line String?
+  tel String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  deleted_at DateTime? @map("deleted_at")
+
+}
+model contact {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String?
+  subtitle String?
+  detail String?
+  detail1 String?
+  picture1 String?
+  picture2 String?
+
+}
+
+model contactsocialmedia {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  facebook String?
+  Line String?
+  Instagram String?
+  twitter String?
+  youtube String?
+}
+
+model service{
   id String    @id @default(auto()) @map("_id") @db.ObjectId
   title String?
-  subTitle String?
+  subtitle String?
   img String?
   category String?
 }
@@ -97,23 +145,23 @@ model Admin {
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
   deleted_at DateTime? @map("deleted_at")
-  user  User[]
+  // user  User[]
 
 }
-model User{
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  fname String?
-  lname String?
-  nickname String?
-  sex String?
-  username String?
-  password String?
-  email String?
-  line String?
-  tel String?
-  createdAt  DateTime? @default(now())
-  updatedAt  DateTime? @updatedAt
-  deleted_at DateTime? @map("deleted_at")
-  adminId String @db.ObjectId
-  admin Admin? @relation(fields: [adminId], references: [id])
-}
+// model User{
+//   id String @id @default(auto()) @map("_id") @db.ObjectId
+//   fname String?
+//   lname String?
+//   nickname String?
+//   sex String?
+//   username String?
+//   password String?
+//   email String?
+//   line String?
+//   tel String?
+//   createdAt  DateTime? @default(now())
+//   updatedAt  DateTime? @updatedAt
+//   deleted_at DateTime? @map("deleted_at")
+//   adminId String @db.ObjectId
+//   admin Admin? @relation(fields: [adminId], references: [id])
+// }

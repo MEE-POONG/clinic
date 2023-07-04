@@ -1,4 +1,4 @@
-import { PrismaClient, Aboutclinic } from '@prisma/client';
+import { PrismaClient, Article } from '@prisma/client';
 const prisma = new PrismaClient()
 
 export default async function handler(req: any, res: any) {
@@ -6,7 +6,7 @@ export default async function handler(req: any, res: any) {
     switch (method) {
         case 'GET':
             try {
-                const data = await prisma.aboutclinic.findMany({
+                const data = await prisma.article.findMany({
                     
                 });
                 res.status(200).json(data)
@@ -15,21 +15,18 @@ export default async function handler(req: any, res: any) {
             }
             break
         case 'POST':
-            const {Title ,Subtitel,detail1,img,detail2,img2,}= req.body;
+            const {Title ,detail,img}= req.body;
             try {
-                const newAboutclinic = await prisma.aboutclinic.create({
+                const newArticle = await prisma.article.create({
                     data: {
                         Title ,
-                        Subtitel,
-                        detail1,
                         img,
-                        detail2,
-                        img2,
+                        detail,
                     },
                 });
-                res.status(201).json({ success: true, data: newAboutclinic });
+                res.status(201).json({ success: true, data: newArticle });
             } catch (error) {
-                res.status(500).json({ success: true, message: "An error occurred while creating the aboutclinic" });
+                res.status(500).json({ success: true, message: "An error occurred while creating the article" });
             }
             break;
         default:

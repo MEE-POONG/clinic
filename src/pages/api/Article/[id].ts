@@ -1,4 +1,4 @@
-import { PrismaClient,Aboutclinic  } from '@prisma/client';
+import { PrismaClient,Article  } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient();
@@ -15,55 +15,53 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     switch (method) {
         case 'GET':
             try {
-                const aboutclinic: Aboutclinic | null = await prisma.aboutclinic.findUnique({
+                const article: Article | null = await prisma.article.findUnique({
                     where: {
                         id: String(id),
                     },
                     
                 });
 
-                if (!aboutclinic) {
-                    return res.status(404).json({ success: false, message: 'Aboutclinic not found' });
+                if (!article) {
+                    return res.status(404).json({ success: false, message: 'Article not found' });
                 }
 
-                res.status(200).json({ success: true, data: aboutclinic });
+                res.status(200).json({ success: true, data: article });
             } catch (error) {
                 console.error(error);
-                res.status(500).json({ success: false, message: "An error occurred while fetching the aboutclinic" });
+                res.status(500).json({ success: false, message: "An error occurred while fetching the article" });
             }
             break;
         case 'PUT':
-            const {Title ,Subtitel,detail1,img,detail2,img2,} = req.body;
+            const {Title ,img ,detail} = req.body;
 
             try {
-                const aboutclinic: Aboutclinic = await prisma.aboutclinic.update({
+                const article: Article = await prisma.article.update({
                     where: { id: String(id) },
                     data: {
                         Title ,
-                        Subtitel,
-                        detail1,
                         img,
-                        detail2,
-                        img2,
+                        detail,
+                        
                     },
                 });
 
-                res.status(200).json({ success: false, data: aboutclinic });
+                res.status(200).json({ success: false, data: article });
             } catch (error) {
                 console.error(error);
-                res.status(500).json({ success: false, message: 'An error occurred while updating the aboutclinic' });
+                res.status(500).json({ success: false, message: 'An error occurred while updating the article' });
             }
             break;
         case 'DELETE':
             try {
-                const aboutclinic: Aboutclinic = await prisma.aboutclinic.delete({
+                const article: Article = await prisma.article.delete({
                     where: { id: String(id) },
                 });
 
-                res.status(200).json({ success: false, message: 'Aboutclinic deleted successfully', data: aboutclinic });
+                res.status(200).json({ success: false, message: 'Article deleted successfully', data: article });
             } catch (error) {
                 console.error("67 ",error);
-                res.status(500).json({ success: false, message: 'An error occurred while deleting the aboutclinic' });
+                res.status(500).json({ success: false, message: 'An error occurred while deleting the article' });
             }
             break;
         default:

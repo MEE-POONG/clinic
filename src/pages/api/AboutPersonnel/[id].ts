@@ -1,4 +1,4 @@
-import { PrismaClient,Aboutclinic  } from '@prisma/client';
+import { PrismaClient,AboutPersonnel  } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient();
@@ -15,28 +15,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     switch (method) {
         case 'GET':
             try {
-                const aboutclinic: Aboutclinic | null = await prisma.aboutclinic.findUnique({
+                const aboutpersonnel: AboutPersonnel | null = await prisma.aboutPersonnel.findUnique({
                     where: {
                         id: String(id),
                     },
                     
                 });
 
-                if (!aboutclinic) {
-                    return res.status(404).json({ success: false, message: 'Aboutclinic not found' });
+                if (!aboutpersonnel) {
+                    return res.status(404).json({ success: false, message: 'AboutPersonnel not found' });
                 }
 
-                res.status(200).json({ success: true, data: aboutclinic });
+                res.status(200).json({ success: true, data: aboutpersonnel });
             } catch (error) {
                 console.error(error);
-                res.status(500).json({ success: false, message: "An error occurred while fetching the aboutclinic" });
+                res.status(500).json({ success: false, message: "An error occurred while fetching the aboutpersonnel" });
             }
             break;
         case 'PUT':
             const {Title ,Subtitel,detail1,img,detail2,img2,} = req.body;
 
             try {
-                const aboutclinic: Aboutclinic = await prisma.aboutclinic.update({
+                const aboutpersonnel: AboutPersonnel = await prisma.aboutPersonnel.update({
                     where: { id: String(id) },
                     data: {
                         Title ,
@@ -48,22 +48,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     },
                 });
 
-                res.status(200).json({ success: false, data: aboutclinic });
+                res.status(200).json({ success: false, data: aboutpersonnel });
             } catch (error) {
                 console.error(error);
-                res.status(500).json({ success: false, message: 'An error occurred while updating the aboutclinic' });
+                res.status(500).json({ success: false, message: 'An error occurred while updating the aboutpersonnel' });
             }
             break;
         case 'DELETE':
             try {
-                const aboutclinic: Aboutclinic = await prisma.aboutclinic.delete({
+                const aboutpersonnel: AboutPersonnel = await prisma.aboutPersonnel.delete({
                     where: { id: String(id) },
                 });
 
-                res.status(200).json({ success: false, message: 'Aboutclinic deleted successfully', data: aboutclinic });
+                res.status(200).json({ success: false, message: 'AboutPersonnel deleted successfully', data: aboutpersonnel });
             } catch (error) {
                 console.error("67 ",error);
-                res.status(500).json({ success: false, message: 'An error occurred while deleting the aboutclinic' });
+                res.status(500).json({ success: false, message: 'An error occurred while deleting the aboutpersonnel' });
             }
             break;
         default:
