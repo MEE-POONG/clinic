@@ -149,12 +149,7 @@ const PartnerPage: React.FC = () => {
                             </Col>
                             <Col lg="9" >
                                 <Row>
-                                    <Col lg="4">
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Label>title</Form.Label>
-                                            <Form.Control type="text" placeholder="title" defaultValue={id} onChange={e => { setId(e.target.value) }} />
-                                        </Form.Group>
-                                    </Col>
+                                    
                                     <Col lg="4">
                                         <Form.Group className="mb-3" controlId="formBasicEmail">
                                             <Form.Label>title</Form.Label>
