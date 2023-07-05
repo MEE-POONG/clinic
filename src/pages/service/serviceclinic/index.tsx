@@ -1,12 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
-import { Button, Card, Col,Form, Image,  Row } from "react-bootstrap";
+import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "react-bootstrap";
+// import BankSelect from "@/components/Input/Bankselect";
+import EditModal from "@/components/modal/EditModal";
+import useAxios from "axios-hooks";
+import BankAccount from "@/components/Input/BankAccount";
+import Link from "next/link";
+import { bankMap } from '@/test';
+import { Serviceclinic } from '@prisma/client';
+
+
 
 const serviceclinic: React.FC = () => {
+ const [{ data }, getServiceclinic,] = useAxios({
+    url: `/api/serviceclinic`,
+    method: "GET",
+  });
+      // const [title, settitle] = useState([]);
+      // const [subtitle, setsubtitle] = useState([]);
+      // const [catategory, catagory] = useState([]);
+      useEffect(() => {
+        // if (data?.services?.length) {
+        //     console.log("33", data?.services[0])
+            
+        // }
+        console.log(data)
+
+
+    }, [data]);
+
+
   return (
 
-    
+
     <LayOut>
       <Head>
         <title>Wellcome | MePrompt-BackOffice</title>

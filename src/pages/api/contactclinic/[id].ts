@@ -16,7 +16,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         id: id as string,
                     },
                 });
+              
 
+                
                 res.status(200).json(data);
             } catch (error) {
                 res.status(500).json({ error: "An error occurred while fetching the data" });
