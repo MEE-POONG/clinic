@@ -155,15 +155,17 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                             <span className="ms-2">service</span>
                         </Dropdown.Toggle>
 
-                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/service" || checkClickPath === "/service/serviceclinic" || checkClickPath === "/service/Subserviceclinnic" || asPath === "/service/Subserviceclinnic/add"} >
+                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/service" || checkClickPath === "/service/serviceclinic" || checkClickPath === "/service/subServiceclinic" || asPath === "/service/subServiceclinic/add"} >
                             <Link href="/service/serviceclinic" className={asPath === "/service" || asPath === "/service/serviceclinic" ? "nav-link active" : "nav-link"}>
                                 <span>serviceclinic</span>
                             </Link>
-                            <Link href="/service/subserviceclinnic" className={asPath === "/service/subserviceclinnic" || asPath === "/service/subserviceclinnic/add" ? "nav-link active" : "nav-link"}>
-                                <span>Subserviceclinnic</span>
+                            <Link href="/service/subServiceclinic" className={asPath === "/service/subServiceclinic" || asPath === "/service/subServiceclinic/add" ? "nav-link active" : "nav-link"}>
+                                <span>subServiceclinic</span>
                             </Link>
                         </Dropdown.Menu>
                     </div>
+
+                    
 
 
                 </Offcanvas.Body>
