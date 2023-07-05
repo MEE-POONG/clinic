@@ -12,14 +12,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const page: number = Number(req.query.page) || 1;
                 const pageSize: number = Number(req.query.pageSize) || 10;
 
-                const aboutClinics = await prisma.aboutClinic.findMany({
-                    skip: (page - 1) * pageSize,
-                    take: pageSize,
+                const aboutClinics = await prisma.aboutClinic.findFirst({
+                    
                 });
 
                 const totalAboutClinics = await prisma.aboutClinic.count();
                 const totalPage: number = Math.ceil(totalAboutClinics / pageSize);
-                res.status(200).json({ aboutClinics, page, pageSize, totalPage });
+                res.status(200).json({ aboutClinics });
             } catch (error) {
                 res.status(500).json({ error: "An error occurred while fetching the aboutClinics" });
             }
