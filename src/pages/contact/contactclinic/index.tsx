@@ -5,8 +5,8 @@ import { Button, Card, Col,Form, Image,  Row } from "react-bootstrap";
 import EditModal from "@/components/modal/EditModal";
 import useAxios from "axios-hooks";
 import Link from "next/link";
-
-
+import axios from 'axios';
+import handler from "@/pages/api/aboutclinic";
 
 const Contactclinic: React.FC = () => {
 
@@ -14,7 +14,7 @@ const Contactclinic: React.FC = () => {
     url: '/api/contactclinic',
     method: "GET",
 });
-
+      const [id, setid] = useState<string>(""); 
       const [title, settitle] = useState<string>("");
       const [subtitle, setsubtitle] = useState<string>("");
       const [detail1, setdetail1] = useState<string>("");
@@ -22,23 +22,67 @@ const Contactclinic: React.FC = () => {
       const [picture1, setpicture1] = useState<string>("");
       const [picture2, setpicture2] = useState<string>("");
       
+
+
+      const [{ loading: updateMemberLoading, error: updateMemberError }, putcontactclinic,] = useAxios({
+      }, { manual: true });
+      const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
+        event.preventDefault();
+        event.stopPropagation();
+        let missingFields = [];
+        const data = {
+           
+            title,
+
+          };
+
+        // Execute the update
+        const response = await putcontactclinic({
+            url: "/api/contactclinic" + id,
+            method: "PUT",
+            data
+        });
+        if (response && response.status === 200) {
+            console.log(response);
+            console.log("put done");
+
+        } else {
+
+            throw new Error('Failed to update data');
+        }
+
+    }; 
+
         useEffect(() => {
-          // setFilteredPartnersData(data?.data ?? []);
+        
+          setid(contactclinicData?.contactclinics?.id)
           settitle(contactclinicData?.contactclinics?.title)
           setsubtitle(contactclinicData?.contactclinics?.subtitle)
           setdetail1(contactclinicData?.contactclinics?.detail1)
           setdetail2(contactclinicData?.contactclinics?.detail2)
           setpicture1(contactclinicData?.contactclinics?.picture1)
-         /* console.log(contactclinicData?.contactclinics?.picture2);*/
           setpicture2(contactclinicData?.contactclinics?.picture2)
 
+         /* console.log(contactclinicData?.contactclinics?.picture2);*/
         }, [contactclinicData]);
+
+
 
         useEffect(() => {
          
          console.log(contactclinicData?.contactclinics?.title);
      
-        }, [subtitle]);
+        }, [title]);
+
+       
+
+
+
+
+
+
+
+
 
 
 
@@ -66,7 +110,7 @@ const Contactclinic: React.FC = () => {
               <Button className="ms-2 btn" bsPrefix="icon">
                 รีเฟรช
               </Button>
-              <Button className="ms-2 btn" bsPrefix="icon">
+              <Button className="ms-2 btn" bsPrefix="icon" onClick={handleSubmit}>
                 ยืนยัน
               </Button>
             </span>
