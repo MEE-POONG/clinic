@@ -43,20 +43,13 @@ const Contactclinic: React.FC = () => {
             console.log(picture1[0])
 
             setpicture2(data?.contactclinic?.picture2 || "");
-            console.log(picture2[0])
+            console.log(picture2)
         }
     }, [data]);
 
       
       
       
-      
-      
-      
-      
-      
-
-    
   return (
     <LayOut>
       <Head>
