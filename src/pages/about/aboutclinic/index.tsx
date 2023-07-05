@@ -10,10 +10,12 @@ import BankAccount from "@/components/Input/BankAccount";
 import Link from "next/link";
 import { bankMap } from '@/test';
 import { AboutClinic, AboutPersonal } from '@prisma/client';
+import { subtle } from "crypto";
 
 
 const PartnerPage: React.FC = () => {
 
+    const [id, setId] = useState<string>("");
     const [title, setTitle] = useState<string>("");
     const [subTitle, setSubtitle] = useState<string>("");
     const [detail1, setDetail1] = useState<string>("");
@@ -28,45 +30,73 @@ const PartnerPage: React.FC = () => {
     });
 
 
+    const [{ loading: updateMemberLoading, error: updateMemberError }, putAboutclinic,] = useAxios({
+    }, { manual: true });
+
+
     useEffect(() => {
-        if (data?.aboutClinics?.length) {
-            console.log("33", data?.aboutClinics[0])
-            
-            setTitle(data?.aboutClinics?.title || "");
-            console.log(title)
-
-            setSubtitle(data?.aboutClinics?.subTitle || "");
-            console.log(subTitle)
-
-            setDetail1(data?.aboutClinics?.detail1 || "");
-            console.log(detail1)
-
-            setImg(data?.aboutClinics?.img || "");
-            console.log(img)
-
-            setDetail2(data?.aboutClinics?.detail2 || "");
-            console.log(detail2)
-
-            setImg2(data?.aboutClinics?.img2 || "");
-            console.log(img2)
-        }
-
+        //console.log("data :",data?.aboutClinics);
+        setId(data?.aboutClinics?.id);
+        setTitle(data?.aboutClinics?.title);
+        setSubtitle(data?.aboutClinics?.subTitle);
+        setDetail1(data?.aboutClinics?.detail1);
+        setImg(data?.aboutClinics?.img);
+        setDetail2(data?.aboutClinics?.detail2);
+        setImg2(data?.aboutClinics?.img2);
 
     }, [data]);
 
 
-    //useEffect(() => {
-    // if (aboutclinicsData && aboutclinicsData.length > 0) {
-    //   console.log(aboutclinicsData);
-    //   console.log(aboutclinicsData.title);
-    // }
 
-    //     if(aboutclinicsData && aboutclinicsData.length)
-    //     {
-    //         console.log(aboutclinicsData[0])
-    //         console.log("dsadsad")
-    //     }
-    //   }, [aboutclinicsData]);
+
+    useEffect(() => {
+        //console.log("data :",data?.aboutClinics);
+        console.log(subTitle)
+
+
+    }, [subTitle]);
+
+
+
+
+
+    const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
+        event.preventDefault();
+        event.stopPropagation();
+        //let missingFields = [];
+        //if (!title) missingFields.push("title");
+        //if (!subTitle) missingFields.push("subTitle");
+
+        //console.log(missingFields);
+
+
+        const data = {
+            title,
+            subTitle,
+            detail1,
+            detail2,
+         
+          };
+  
+
+        // Execute the update
+        const response = await putAboutclinic({
+            url: "/api/aboutclinic/" + id,
+            method: "PUT",
+            data
+        });
+        if (response && response.status === 200) {
+            console.log(response);
+            console.log("put done");
+
+        } else {
+
+            throw new Error('Failed to update data');
+        }
+
+    };
+
+
 
 
 
@@ -122,25 +152,31 @@ const PartnerPage: React.FC = () => {
                                     <Col lg="4">
                                         <Form.Group className="mb-3" controlId="formBasicEmail">
                                             <Form.Label>title</Form.Label>
-                                            <Form.Control type="text" placeholder="title" />
+                                            <Form.Control type="text" placeholder="title" defaultValue={id} onChange={e => { setId(e.target.value) }} />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col lg="4">
+                                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                                            <Form.Label>title</Form.Label>
+                                            <Form.Control type="text" placeholder="title" defaultValue={title} onChange={e => { setTitle(e.target.value) }} />
                                         </Form.Group>
                                     </Col>
                                     <Col lg="4">
                                         <Form.Group className="mb-3" controlId="formBasicEmail">
                                             <Form.Label>subTitle</Form.Label>
-                                            <Form.Control type="text" placeholder="subTitle" />
+                                            <Form.Control type="text" placeholder="subTitle" defaultValue={subTitle} onChange={e => { setSubtitle(e.target.value) }} />
                                         </Form.Group>
                                     </Col>
                                     <Col lg="4">
                                         <Form.Group className="mb-3" controlId="formBasicEmail">
                                             <Form.Label>detail1</Form.Label>
-                                            <Form.Control type="text" placeholder="detail1" />
+                                            <Form.Control type="text" placeholder="detail1" defaultValue={detail1} onChange={e => { setDetail1(e.target.value) }} />
                                         </Form.Group>
                                     </Col>
                                     <Col lg="4">
                                         <Form.Group className="mb-3" controlId="formBasicEmail">
                                             <Form.Label>detail2</Form.Label>
-                                            <Form.Control type="text" placeholder="detail2" />
+                                            <Form.Control type="text" placeholder="detail2" defaultValue={detail2} onChange={e => { setDetail2(e.target.value) }} />
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -155,7 +191,7 @@ const PartnerPage: React.FC = () => {
                             <Button className="ms-2 btn" bsPrefix="icon">
                                 รีเฟรช
                             </Button>
-                            <Button className="ms-2 btn" bsPrefix="icon">
+                            <Button className="ms-2 btn" bsPrefix="icon" onClick={handleSubmit}>
                                 ยืนยัน
                             </Button>
                         </span>
