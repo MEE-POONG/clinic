@@ -12,32 +12,56 @@ import { bankMap } from '@/test';
 import { Serviceclinic } from '@prisma/client';
 
 
-
 const serviceclinic: React.FC = () => {
- const [{ data }, getServiceclinic,] = useAxios({
+
+  const [{ data: serviceclinicData }, getServiceclinic,] = useAxios({
     url: `/api/serviceclinic`,
     method: "GET",
   });
-      // const [title, settitle] = useState([]);
-      // const [subtitle, setsubtitle] = useState([]);
-      // const [catategory, catagory] = useState([]);
-      useEffect(() => {
-        // if (data?.services?.length) {
-        //     console.log("33", data?.services[0])
-            
-        // }
-        console.log(data)
+  const [id, setId] = useState<string>("");
+  const [title, settitle] = useState<string>("");
+  const [subtitle, setsubtitle] = useState<string>("");
+  const [catagory, setcatagory] = useState<string>("");
+  useEffect(() => {
+    setId(serviceclinicData?.services?.id);
+    settitle(serviceclinicData?.services?.title);
+  }, [serviceclinicData]);
 
 
-    }, [data]);
+  const [{ loading: updateMemberLoading, error: updateMemberError }, putServiceclinic,] = useAxios({
+  }, { manual: true });
+  
 
+  const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
 
+    const data = {
+      title,
+
+    };
+
+    const response = await putServiceclinic({
+      url: "/api/serviceclinic/" + id,
+      method: "PUT",
+      data
+    });
+    if (response && response.status === 200) {
+      console.log("response : set");
+      console.log("put done");
+
+    } else {
+
+      throw new Error('Failed to update data');
+    }
+
+  };
   return (
 
 
     <LayOut>
       <Head>
-        <title>Wellcome | MePrompt-BackOffice</title>
+        <title>Welcome | MePrompt-BackOffice</title>
         <meta
           name="description"
           content="T ACTIVE"
@@ -48,7 +72,7 @@ const serviceclinic: React.FC = () => {
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-            serviceclinic
+              serviceclinic
             </h4>
             <span>
               <Button className="ms-2 btn" bsPrefix="icon">
@@ -85,19 +109,19 @@ const serviceclinic: React.FC = () => {
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>title</Form.Label>
-                      <Form.Control type="text" placeholder="title" />
+                      <Form.Control type="text" placeholder="title" defaultValue={title} onChange={e => { settitle(e.target.value) }} />
                     </Form.Group>
                   </Col>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>subtitle</Form.Label>
-                      <Form.Control type="text" placeholder="subtitle" />
+                      <Form.Control type="text" placeholder="subtitle" defaultValue={subtitle} onChange={e => { setsubtitle(e.target.value) }} />
                     </Form.Group>
                   </Col>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>category</Form.Label>
-                      <Form.Control type="text" placeholder="category" />
+                      <Form.Label>catagory</Form.Label>
+                      <Form.Control type="text" placeholder="category" defaultValue={catagory} onChange={e => { setcatagory(e.target.value) }} />
                     </Form.Group>
                   </Col>
                 </Row>
@@ -112,7 +136,7 @@ const serviceclinic: React.FC = () => {
               <Button className="ms-2 btn" bsPrefix="icon">
                 รีเฟรช
               </Button>
-              <Button className="ms-2 btn" bsPrefix="icon">
+              <Button className="ms-2 btn" bsPrefix="icon" onClick={handleSubmit}>
                 ยืนยัน
               </Button>
             </span>
