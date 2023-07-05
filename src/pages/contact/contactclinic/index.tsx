@@ -10,48 +10,22 @@ import handler from "@/pages/api/aboutclinic";
 
 const Contactclinic: React.FC = () => {
 
-  const [{ data: contactclinicData }, getcontactclinic,] = useAxios({
+  const [id, setid] = useState<string>(""); 
+  const [title, settitle] = useState<string>("");
+  const [subtitle, setsubtitle] = useState<string>("");
+  const [detail1, setdetail1] = useState<string>("");
+  const [detail2, setdetail2] = useState<string>("");
+  const [picture1, setpicture1] = useState<string>("");
+  const [picture2, setpicture2] = useState<string>("");
+  
+
+  const [{ data: contactclinicData }, getContactclinic,] = useAxios({
     url: '/api/contactclinic',
     method: "GET",
 });
-      const [id, setid] = useState<string>(""); 
-      const [title, settitle] = useState<string>("");
-      const [subtitle, setsubtitle] = useState<string>("");
-      const [detail1, setdetail1] = useState<string>("");
-      const [detail2, setdetail2] = useState<string>("");
-      const [picture1, setpicture1] = useState<string>("");
-      const [picture2, setpicture2] = useState<string>("");
-      
-
-
-      const [{ loading: updateMemberLoading, error: updateMemberError }, putcontactclinic,] = useAxios({
-      }, { manual: true });
-      const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
-        event.preventDefault();
-        event.stopPropagation();
-        let missingFields = [];
-        const data = {
-           
-            title,
-
-          };
-
-        // Execute the update
-        const response = await putcontactclinic({
-            url: "/api/contactclinic" + id,
-            method: "PUT",
-            data
-        });
-        if (response && response.status === 200) {
-            console.log(response);
-            console.log("put done");
-
-        } else {
-
-            throw new Error('Failed to update data');
-        }
-
-    }; 
+     
+const [{ loading: updateMemberLoading, error: updateMemberError }, putContactclinic,] = useAxios({
+}, { manual: true });
 
         useEffect(() => {
         
@@ -74,12 +48,42 @@ const Contactclinic: React.FC = () => {
      
         }, [title]);
 
+
+        const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
+          event.preventDefault();
+          event.stopPropagation();
+          //let missingFields = [];
+          //if (!title) missingFields.push("title");
+          //if (!subTitle) missingFields.push("subTitle");
+  
+          //console.log(missingFields);
+  
+  
+          const data = {
+              title,
+            
+           
+            };
+    
+  
+          // Execute the update
+          const response = await putContactclinic({
+              url: "/api/contactclinic" + id,
+              method: "PUT",
+              data
+          });
+          if (response && response.status === 200) {
+              console.log(response);
+              console.log("put done");
+  
+          } else {
+  
+              throw new Error('Failed to update data');
+          }
+  
+      };
+
        
-
-
-
-
-
 
 
 
