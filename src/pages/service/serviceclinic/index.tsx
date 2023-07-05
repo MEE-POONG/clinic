@@ -13,18 +13,23 @@ import { Serviceclinic } from '@prisma/client';
 
 
 const serviceclinic: React.FC = () => {
+  const [id, setid] = useState<string>("");
+  const [title, settitle] = useState<string>("");
+  const [subtitle, setsubtitle] = useState<string>("");
+  const [catagory, setcatagory] = useState<string>("");
+
+
 
   const [{ data: serviceclinicData }, getServiceclinic,] = useAxios({
     url: `/api/serviceclinic`,
     method: "GET",
   });
-  const [id, setId] = useState<string>("");
-  const [title, settitle] = useState<string>("");
-  const [subtitle, setsubtitle] = useState<string>("");
-  const [catagory, setcatagory] = useState<string>("");
+ 
   useEffect(() => {
-    setId(serviceclinicData?.services?.id);
+    setid(serviceclinicData?.services?.id);
     settitle(serviceclinicData?.services?.title);
+    setsubtitle(serviceclinicData?.services?.subtitle);
+    setcatagory(serviceclinicData?.services?.catagory);
   }, [serviceclinicData]);
 
 
@@ -35,27 +40,39 @@ const serviceclinic: React.FC = () => {
   const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     event.stopPropagation();
-
+    let missingFields = [];
     const data = {
-      title,
+        title,
+        subtitle,
+        catagory,
 
-    };
+      };
 
+
+    // Execute the update
     const response = await putServiceclinic({
-      url: "/api/serviceclinic/" + id,
-      method: "PUT",
-      data
+        url: "/api/serviceclinic/" + id,
+        method: "PUT",
+        data
     });
     if (response && response.status === 200) {
-      console.log("response : set");
-      console.log("put done");
+        console.log(response);
+        console.log("put done");
 
     } else {
 
-      throw new Error('Failed to update data');
+        throw new Error('Failed to update data');
     }
 
-  };
+}; 
+
+
+
+
+
+
+
+
   return (
 
 
@@ -109,19 +126,19 @@ const serviceclinic: React.FC = () => {
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>title</Form.Label>
-                      <Form.Control type="text" placeholder="title" defaultValue={title} onChange={e => { settitle(e.target.value) }} />
+                      <Form.Control type="text" placeholder="title" defaultValue={title} onChange={e =>{settitle(e.target.value)}} />
                     </Form.Group>
                   </Col>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>subtitle</Form.Label>
-                      <Form.Control type="text" placeholder="subtitle" defaultValue={subtitle} onChange={e => { setsubtitle(e.target.value) }} />
+                      <Form.Control type="text" placeholder="subtitle" defaultValue={subtitle} onChange={e =>{setsubtitle(e.target.value) }} />
                     </Form.Group>
                   </Col>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>catagory</Form.Label>
-                      <Form.Control type="text" placeholder="category" defaultValue={catagory} onChange={e => { setcatagory(e.target.value) }} />
+                      <Form.Control type="text" placeholder="category" defaultValue={catagory} onChange={e => {setcatagory(e.target.value)}} />
                     </Form.Group>
                   </Col>
                 </Row>
