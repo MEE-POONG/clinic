@@ -16,7 +16,7 @@ const serviceclinic: React.FC = () => {
   const [id, setid] = useState<string>("");
   const [title, settitle] = useState<string>("");
   const [subtitle, setsubtitle] = useState<string>("");
-  const [catagory, setcatagory] = useState<string>("");
+  const [category, setcategory] = useState<string>("");
 
 
 
@@ -29,7 +29,7 @@ const serviceclinic: React.FC = () => {
     setid(serviceclinicData?.services?.id);
     settitle(serviceclinicData?.services?.title);
     setsubtitle(serviceclinicData?.services?.subtitle);
-    setcatagory(serviceclinicData?.services?.catagory);
+    setcategory(serviceclinicData?.services?.category);
   }, [serviceclinicData]);
 
 
@@ -44,7 +44,7 @@ const serviceclinic: React.FC = () => {
     const data = {
         title,
         subtitle,
-        catagory,
+        category,
 
       };
 
@@ -138,7 +138,7 @@ const serviceclinic: React.FC = () => {
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>catagory</Form.Label>
-                      <Form.Control type="text" placeholder="category" defaultValue={catagory} onChange={e => {setcatagory(e.target.value)}} />
+                      <Form.Control type="text" placeholder="category" defaultValue={category} onChange={e => {setcategory(e.target.value)}} />
                     </Form.Group>
                   </Col>
                 </Row>
