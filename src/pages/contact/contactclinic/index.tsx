@@ -5,7 +5,6 @@ import { Button, Card, Col,Form, Image,  Row } from "react-bootstrap";
 import EditModal from "@/components/modal/EditModal";
 import useAxios from "axios-hooks";
 import Link from "next/link";
-import axios from 'axios';
 import handler from "@/pages/api/aboutclinic";
 
 const Contactclinic: React.FC = () => {
@@ -52,15 +51,12 @@ const [{ loading: updateMemberLoading, error: updateMemberError }, putContactcli
         const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
           event.preventDefault();
           event.stopPropagation();
-          //let missingFields = [];
-          //if (!title) missingFields.push("title");
-          //if (!subTitle) missingFields.push("subTitle");
-  
-          //console.log(missingFields);
-  
-  
+
           const data = {
               title,
+              subtitle,
+              detail1,
+              detail2,
             
            
             };
@@ -68,7 +64,7 @@ const [{ loading: updateMemberLoading, error: updateMemberError }, putContactcli
   
           // Execute the update
           const response = await putContactclinic({
-              url: "/api/contactclinic" + id,
+              url: "/api/contactclinic/" + id,
               method: "PUT",
               data
           });

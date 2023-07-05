@@ -28,7 +28,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         case 'PUT':
             try {
                 const id = req.query.id;
-
                 const data = await prisma.contactclinic.update({
                     where: {
                         id: id as string,
