@@ -5,12 +5,13 @@ import { Button, Card, Col,Form, Image,  Row } from "react-bootstrap";
 import EditModal from "@/components/modal/EditModal";
 import useAxios from "axios-hooks";
 import Link from "next/link";
-import { Contactclinic } from '@prisma/client';
+import { Contactclinic ,  } from '@prisma/client';
+
 
 
 const Contactclinic: React.FC = () => {
 
-  const [{ data }, ContactclinicData,] = useAxios({
+  const [{ data }, contactclinic,] = useAxios({
     url: `/api/contactclinic`,
     method: "GET",
 });
@@ -24,25 +25,25 @@ const Contactclinic: React.FC = () => {
 
       useEffect(() => {
         if (data?.contactclinic?.length) {
-            console.log("33", data?.contactclinic[0])
+            console.log("10", data?.contactclinic[0])
             
-           /* settitle(data?.contactclinic?.title || "");
-            console.log(title)
+            settitle(data?.contactclinic?.title || "");
+            console.log(title[0])
 
             setsubtitle(data?.contactclinic?.subtitle || "");
-            console.log(subtitle)
+            console.log(subtitle[0])
 
             setdetail1(data?.contactclinic?.detail1 || "");
-            console.log(detail1)
+            console.log(detail1[0])
 
             setdetail2(data?.contactclinic?.detail2 || "");
-            console.log(detail2)
+            console.log(detail2[0])
 
             setpicture1(data?.contactclinic?.picture1 || "");
-            console.log(picture1)
+            console.log(picture1[0])
 
             setpicture2(data?.contactclinic?.picture2 || "");
-            console.log(picture2)*/
+            console.log(picture2[0])
         }
     }, [data]);
 
@@ -56,16 +57,6 @@ const Contactclinic: React.FC = () => {
       
 
     
-
-
-
-
-
-
-
-
-
-
   return (
     <LayOut>
       <Head>
