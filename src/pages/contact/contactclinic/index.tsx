@@ -5,14 +5,13 @@ import { Button, Card, Col,Form, Image,  Row } from "react-bootstrap";
 import EditModal from "@/components/modal/EditModal";
 import useAxios from "axios-hooks";
 import Link from "next/link";
-import { Contactclinic ,  } from '@prisma/client';
 
 
 
 const Contactclinic: React.FC = () => {
 
-  const [{ data }, contactclinic,] = useAxios({
-    url: `/api/contactclinic`,
+  const [{ data: contactclinicData }, getcontactclinic,] = useAxios({
+    url: '/api/contactclinic',
     method: "GET",
 });
 
@@ -22,34 +21,28 @@ const Contactclinic: React.FC = () => {
       const [detail2, setdetail2] = useState<string>("");
       const [picture1, setpicture1] = useState<string>("");
       const [picture2, setpicture2] = useState<string>("");
-
-      useEffect(() => {
-        if (data?.contactclinic?.length) {
-            console.log("10", data?.contactclinic[0])
-            
-            settitle(data?.contactclinic?.title || "");
-            console.log(title[0])
-
-            setsubtitle(data?.contactclinic?.subtitle || "");
-            console.log(subtitle[0])
-
-            setdetail1(data?.contactclinic?.detail1 || "");
-            console.log(detail1[0])
-
-            setdetail2(data?.contactclinic?.detail2 || "");
-            console.log(detail2[0])
-
-            setpicture1(data?.contactclinic?.picture1 || "");
-            console.log(picture1[0])
-
-            setpicture2(data?.contactclinic?.picture2 || "");
-            console.log(picture2)
-        }
-    }, [data]);
-
       
-      
-      
+        useEffect(() => {
+          // setFilteredPartnersData(data?.data ?? []);
+          settitle(contactclinicData?.contactclinics?.title)
+          setsubtitle(contactclinicData?.contactclinics?.subtitle)
+          setdetail1(contactclinicData?.contactclinics?.detail1)
+          setdetail2(contactclinicData?.contactclinics?.detail2)
+          setpicture1(contactclinicData?.contactclinics?.picture1)
+         /* console.log(contactclinicData?.contactclinics?.picture2);*/
+          setpicture2(contactclinicData?.contactclinics?.picture2)
+
+        }, [contactclinicData]);
+
+        useEffect(() => {
+         
+         console.log(contactclinicData?.contactclinics?.title);
+     
+        }, [subtitle]);
+
+
+
+
   return (
     <LayOut>
       <Head>
@@ -85,14 +78,14 @@ const Contactclinic: React.FC = () => {
                 <div className="d-flex justify-content-center">
                   <div className="btn btn-primary btn-rounded">
                     <label className="form-label text-white m-1" htmlFor="customFile1">picture1</label>
-                    <input type="file" className="form-control d-none" id="customFile1" />
+                    <input type="file" className="form-control d-none" id="customFile1" defaultValue={picture1}/>
                   </div>
                 </div>
                 <Image src="./images/logo-default.png" width={'200px'} className="m-3" alt="picture2" />
                 <div className="d-flex justify-content-center">
                   <div className="btn btn-primary btn-rounded">
                     <label className="form-label text-white m-1" htmlFor="customFile1">picture2</label>
-                    <input type="file" className="form-control d-none" id="customFile1" />
+                    <input type="file" className="form-control d-none" id="customFile1" defaultValue={picture2} />
                   </div>
                 </div>
               </Col>
@@ -101,25 +94,25 @@ const Contactclinic: React.FC = () => {
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>title</Form.Label>
-                      <Form.Control type="text" placeholder="title" />
+                      <Form.Control type="text" placeholder="title" defaultValue={title} onChange={e=>{settitle(e.target.value)}}/>
                     </Form.Group>
                   </Col>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>subtitle</Form.Label>
-                      <Form.Control type="text" placeholder="subtitle" />
+                      <Form.Control type="text" placeholder="subtitle" defaultValue={subtitle} onChange={e=>{setsubtitle(e.target.value)}}/>
                     </Form.Group>
                   </Col>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>detail1</Form.Label>
-                      <Form.Control type="text" placeholder="detail1" />
+                      <Form.Control type="text" placeholder="detail1" defaultValue={detail1} onChange={e=>{setdetail1(e.target.value)}}/>
                     </Form.Group>
                   </Col>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>detail2</Form.Label>
-                      <Form.Control type="text" placeholder="detail2" />
+                      <Form.Control type="text" placeholder="detail2" defaultValue={detail2} onChange={e=>{setdetail2(e.target.value)}}/>
                     </Form.Group>
                   </Col>
                 </Row>

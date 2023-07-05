@@ -12,14 +12,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const page: number = Number(req.query.page) || 1;
                 const pageSize: number = Number(req.query.pageSize) || 10;
 
-                const contactsocialmedials = await prisma.contactSocialMedia.findMany({
-                    skip: (page - 1) * pageSize,
-                    take: pageSize,
+                const contactsocialmedials = await prisma.contactSocialMedia.findFirst({
+                   
                 });
 
                 const totalcontactsocialmedials = await prisma.contactSocialMedia.count();
                 const totalPage: number = Math.ceil(totalcontactsocialmedials / pageSize);
-                res.status(200).json({ contactsocialmedials, page, pageSize, totalPage });
+                res.status(200).json({ contactsocialmedials});
             } catch (error) {
                 res.status(500).json({ error: "An error occurred while fetching the contactsocialmedials" });
             }
