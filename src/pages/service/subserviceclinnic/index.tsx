@@ -1,9 +1,46 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
-import { Button, Card, Col,Form, Image,  Row } from "react-bootstrap";
+import { Button, Card, Col, Form, Image, Row } from "react-bootstrap";
+import useAxios from "axios-hooks";
+import { useState } from 'react';
 
 const subserviceclinnic: React.FC = () => {
+  const [{ data: subserviceclinicData }, getSubServiceclinic,] = useAxios({
+    url: `/api/subserviceclinic`,
+    method: "GET",
+  });
+
+  const [title, settitle] = useState<string>("");
+  const [subtitle, setsubtitle] = useState<string>("");
+  const [catagory, setcatagory] = useState<string>("");
+  const [reviewdetail, setreviewdetail] = useState<string>("");
+  const [price, setPrice] = useState<string>("");
+
+  useEffect(() => {
+    console.log(title)
+  }, [title]);
+
+  useEffect(() => {
+    console.log(subtitle)
+  }, [subtitle]);
+
+  useEffect(() => {
+    console.log(catagory)
+  }, [catagory]);
+
+
+  useEffect(() => {
+    console.log(reviewdetail)
+  }, [reviewdetail]);
+
+  useEffect(() => {
+    console.log(price)
+  }, [price]);
+
+
+
+
   return (
     <LayOut>
       <Head>
@@ -55,25 +92,31 @@ const subserviceclinnic: React.FC = () => {
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>title</Form.Label>
-                      <Form.Control type="text" placeholder="title" />
+                      <Form.Control type="text" placeholder="title" onChange={e => { settitle(e.target.value) }} />
                     </Form.Group>
                   </Col>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>subtitle</Form.Label>
-                      <Form.Control type="text" placeholder="subtitle" />
+                      <Form.Control type="text" placeholder="subtitle" onChange={e => { setsubtitle(e.target.value) }} />
                     </Form.Group>
                   </Col>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>detail1</Form.Label>
-                      <Form.Control type="text" placeholder="detail1" />
+                      <Form.Label>catagory</Form.Label>
+                      <Form.Control type="text" placeholder="catagory" onChange={e => { setcatagory(e.target.value) }} />
                     </Form.Group>
                   </Col>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>detail2</Form.Label>
-                      <Form.Control type="text" placeholder="detail2" />
+                      <Form.Label>reviewdetail</Form.Label>
+                      <Form.Control type="text" placeholder="reviewdetail" onChange={e => { setreviewdetail(e.target.value) }} />
+                    </Form.Group>
+                  </Col>
+                  <Col lg="4">
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Label>price</Form.Label>
+                      <Form.Control type="text" placeholder="price" onChange={e => { setPrice(e.target.value) }} />
                     </Form.Group>
                   </Col>
                 </Row>

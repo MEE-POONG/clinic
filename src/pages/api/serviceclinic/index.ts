@@ -12,28 +12,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const page: number = Number(req.query.page) || 1;
                 const pageSize: number = Number(req.query.pageSize) || 10;
 
-                const subServices = await prisma.subService.findMany({
-                    skip: (page - 1) * pageSize,
-                    take: pageSize,
+                const services = await prisma.serviceclinic.findFirst({
+                    
                 });
 
-                const totalsubServices = await prisma.subService.count();
-                const totalPage: number = Math.ceil(totalsubServices / pageSize);
-                res.status(200).json({ subServices, page, pageSize, totalPage });
+                const totalservices = await prisma.serviceclinic.count();
+                const totalPage: number = Math.ceil(totalservices / pageSize);
+                res.status(200).json({ services });
             } catch (error) {
-                res.status(500).json({ error: "An error occurred while fetching the subServices" });
+                res.status(500).json({ error: "An error occurred while fetching the services" });
             }
             break;
 
         case 'POST':
             try {
-                const newsubService = await prisma.subService.create({
+                const newservice = await prisma.serviceclinic.create({
                     data: req.body,
                 });
 
-                res.status(201).json(newsubService);
+                res.status(201).json(newservice);
             } catch (error) {
-                res.status(500).json({ error: "An error occurred while creating the subService" });
+                res.status(500).json({ error: "An error occurred while creating the service" });
             }
             break;
 
