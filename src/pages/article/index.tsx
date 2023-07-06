@@ -128,7 +128,11 @@
         <tr key={article.id}>
           <td>{index+1}</td>
           <td>{article.title}</td>
-          <td><Image src={`data:image/png;base64, ${article.img}`} alt="Article Image" thumbnail /></td>
+          <td> {article.img ? (
+    <Image src={`data:image/png;base64, ${article.img}`} alt="Article Image" thumbnail />
+  ) : (
+    "no image"
+  )}</td>
           <td>{article.detail}</td>
           <td>{article.createdAt}</td>
           <td>

@@ -27,6 +27,26 @@ const ArticleAdd: React.FC = () => {
 
 
 
+
+
+
+        const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+            const file = event.target.files && event.target.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onloadend = () => {
+                const base64String = reader.result as string;
+      const splittedString = base64String.split(",")[1]; // ตัดส่วน "data:image/png;base64," ออก
+                setImg(splittedString);
+              };
+              reader.readAsDataURL(file);
+            }
+          };
+          
+
+
+
+
         const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
             event.preventDefault();
             event.stopPropagation();
@@ -80,18 +100,12 @@ const ArticleAdd: React.FC = () => {
                             </InputGroup>
                         </Col>
                         <Col lg="6">
-                            <InputGroup className="w-auto mb-3" bsPrefix="input-icon">
-                                <InputGroup.Text id="basic-addon1">
-                                    <FaUnlockAlt />
-                                </InputGroup.Text>
-                                <Form.Control
-                                    placeholder="img"
-                                    aria-label="img"
-                                    value={img}
-                                    onChange={(e) => setImg(e.target.value)}
-                                    aria-describedby="basic-addon1"
-                                />
-                            </InputGroup>
+                        <div className="d-flex justify-content-center">
+                  <div className="btn btn-primary btn-rounded">
+                    <label className="form-label text-white m-1" htmlFor="customFile1">Upload image 1</label>
+                    <input type="file" className="form-control d-none" id="customFile1" onChange={handleFileUpload}  />
+                  </div>
+                </div>
                         </Col>
                         <Col lg="6">
                             <InputGroup className="w-auto mb-3" bsPrefix="input-icon">
