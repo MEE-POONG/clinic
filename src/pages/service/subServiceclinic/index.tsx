@@ -5,41 +5,61 @@ import { Button, Card, Col, Form, Image, Row } from "react-bootstrap";
 import useAxios from "axios-hooks";
 import { useState } from 'react';
 
-const subserviceclinnic: React.FC = () => {
-  const [{ data: subserviceclinicData }, getSubServiceclinic,] = useAxios({
-    url: `/api/subserviceclinic`,
+
+const subServiceclinic: React.FC = () => {
+  const [id, setid] = useState<string>("");
+  const [title, settitle] = useState<string>("");
+  const [subTitle, setsubTitle] = useState<string>("");
+  const [category, setcategory] = useState<string>("");
+  const [reviewdetail, setreviewdetail] = useState<string>("");
+  const [price, setprice] = useState<string>("");
+
+
+  const [{ data: subServiceclinicData }, getsubServiceclinic,] = useAxios({
+    url: `/api/subServiceclinic`,
     method: "GET",
   });
-
-  const [title, settitle] = useState<string>("");
-  const [subtitle, setsubtitle] = useState<string>("");
-  const [catagory, setcatagory] = useState<string>("");
-  const [reviewdetail, setreviewdetail] = useState<string>("");
-  const [price, setPrice] = useState<string>("");
-
   useEffect(() => {
-    console.log(title)
-  }, [title]);
+    setid(subServiceclinicData?.subServices?.id);
+    settitle(subServiceclinicData?.subServices?.title);
+    setsubTitle(subServiceclinicData?.subServices?.subTitle);
+    setcategory(subServiceclinicData?.subServices?.category);
+    setreviewdetail(subServiceclinicData?.subServices?.reviewdetail);
+    setprice(subServiceclinicData?.subServices?.price);
+  }, [subServiceclinicData]);
 
-  useEffect(() => {
-    console.log(subtitle)
-  }, [subtitle]);
+  const [{ loading: updateMemberLoading, error: updateMemberError }, putsubServiceclinic,] = useAxios({
+  }, { manual: true });
 
-  useEffect(() => {
-    console.log(catagory)
-  }, [catagory]);
-
-
-  useEffect(() => {
-    console.log(reviewdetail)
-  }, [reviewdetail]);
-
-  useEffect(() => {
-    console.log(price)
-  }, [price]);
+  const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    let missingFields = [];
+    const data = {
+        title,
+        subTitle,
+        category,
+        reviewdetail,
+        price,
+      };
 
 
+    // Execute the update
+    const response = await putsubServiceclinic({
+        url: "/api/subServiceclinic/" + id,
+        method: "PUT",
+        data
+    });
+    if (response && response.status === 200) {
+        console.log(response);
+        console.log("put done");
 
+    } else {
+
+        throw new Error('Failed to update data');
+    }
+
+}; 
 
   return (
     <LayOut>
@@ -55,7 +75,7 @@ const subserviceclinnic: React.FC = () => {
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              Contact
+            subServiceclinic
             </h4>
             <span>
               <Button className="ms-2 btn" bsPrefix="icon">
@@ -92,31 +112,31 @@ const subserviceclinnic: React.FC = () => {
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>title</Form.Label>
-                      <Form.Control type="text" placeholder="title" onChange={e => { settitle(e.target.value) }} />
+                      <Form.Control type="text" placeholder="title" defaultValue={title} onChange={e => { settitle(e.target.value) }} />
                     </Form.Group>
                   </Col>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>subtitle</Form.Label>
-                      <Form.Control type="text" placeholder="subtitle" onChange={e => { setsubtitle(e.target.value) }} />
+                      <Form.Control type="text" placeholder="subtitle" defaultValue={subTitle} onChange={e => { setsubTitle(e.target.value) }} />
                     </Form.Group>
                   </Col>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>catagory</Form.Label>
-                      <Form.Control type="text" placeholder="catagory" onChange={e => { setcatagory(e.target.value) }} />
+                      <Form.Label>category</Form.Label>
+                      <Form.Control type="text" placeholder="category" defaultValue={category} onChange={e => { setcategory(e.target.value) }} />
                     </Form.Group>
                   </Col>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>reviewdetail</Form.Label>
-                      <Form.Control type="text" placeholder="reviewdetail" onChange={e => { setreviewdetail(e.target.value) }} />
+                      <Form.Control type="text" placeholder="reviewdetail"defaultValue={reviewdetail} onChange={e => { setreviewdetail(e.target.value) }} />
                     </Form.Group>
                   </Col>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>price</Form.Label>
-                      <Form.Control type="text" placeholder="price" onChange={e => { setPrice(e.target.value) }} />
+                      <Form.Control type="text" placeholder="price" defaultValue={price} onChange={e => { setprice(e.target.value) }} />
                     </Form.Group>
                   </Col>
                 </Row>
@@ -131,7 +151,7 @@ const subserviceclinnic: React.FC = () => {
               <Button className="ms-2 btn" bsPrefix="icon">
                 รีเฟรช
               </Button>
-              <Button className="ms-2 btn" bsPrefix="icon">
+              <Button className="ms-2 btn" bsPrefix="icon" onClick={handleSubmit}>
                 ยืนยัน
               </Button>
             </span>
@@ -141,4 +161,4 @@ const subserviceclinnic: React.FC = () => {
     </LayOut>
   );
 }
-export default subserviceclinnic;
+export default subServiceclinic;

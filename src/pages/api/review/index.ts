@@ -17,8 +17,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     take: pageSize,
                 });
 
-                const totalreviewls = await prisma.review.count();
-                const totalPage: number = Math.ceil(totalreviewls / pageSize);
+                const totalReviewls = await prisma.review.count();
+                const totalPage: number = Math.ceil(totalReviewls / pageSize);
                 res.status(200).json({ reviewls, page, pageSize, totalPage });
             } catch (error) {
                 res.status(500).json({ error: "An error occurred while fetching the reviewls" });
