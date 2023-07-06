@@ -14,6 +14,7 @@
   import PartnerAddPartnerModal from "@/container/Partner/AddPartnerModal";
   import ArticleAdd from "@/container/article/ArticleAdd";
   import ArticleEdit from "@/container/article/ArticleEdit";
+  
 
   interface Params {
     page: number;
@@ -33,7 +34,7 @@
       method: "GET",
     });
 
-    const [{ loading: deletearticleLoading, error: deletearticleError }, executearticleDelete,] = useAxios({}, { manual: true });
+     const [{ loading: deletearticleLoading, error: deletearticleError }, executearticleDelete,] = useAxios({}, { manual: true });
 
     const [filteredarticlesData, setFilteredarticlesData] = useState<Article[]>([]);
 
@@ -59,24 +60,35 @@
     };
 
 
-    const handleDeleteArticle = async (articleId: string) => {
-      try {
-        // ส่งคำขอ DELETE ไปยัง API
-        const response = await executearticleDelete({
-          url: `/api/article/${articleId}`,
-          method: "DELETE",
-        });
-        if (response && response.status === 200) {
-          console.log("Delete successful");
-          // ทำการรีเฟรชหน้าหลังจากลบข้อมูลสำเร็จ (หรือจะอัปเดตข้อมูลที่แสดงอีกครั้ง)
-          window.location.reload();
-        } else {
-          console.error("Delete failed");
-        }
-      } catch (error) {
-        console.error("Delete failed", error);
-      }
+    const deleteArticle = (id: string): Promise<any> => {
+      return executearticleDelete({
+        url: "/api/article/" + id, 
+        method: "DELETE",
+      }).then(() => {
+        setFilteredarticlesData(prevArticle => prevArticle.filter(article => article.id !== id));
+      });
     };
+
+
+
+    // const handleDeleteArticle = async (articleId: string) => {
+    //   try {
+    //     // ส่งคำขอ DELETE ไปยัง API
+    //     const response = await executearticleDelete({
+    //       url: `/api/article/${articleId}`,
+    //       method: "DELETE",
+    //     });
+    //     if (response && response.status === 200) {
+    //       console.log("Delete successful");
+    //       // ทำการรีเฟรชหน้าหลังจากลบข้อมูลสำเร็จ (หรือจะอัปเดตข้อมูลที่แสดงอีกครั้ง)
+    //       window.location.reload();
+    //     } else {
+    //       console.error("Delete failed");
+    //     }
+    //   } catch (error) {
+    //     console.error("Delete failed", error);
+    //   }
+    // };
 
 
     return (
@@ -116,24 +128,16 @@
         <tr key={article.id}>
           <td>{index+1}</td>
           <td>{article.title}</td>
-          <td>{article.img}</td>
+          <td><Image src={`data:image/png;base64, ${article.img}`} alt="Article Image" thumbnail /></td>
           <td>{article.detail}</td>
           <td>{article.createdAt}</td>
           <td>
-                        <ModalOffOn />
-                        <Button className="ms-2 btn info" bsPrefix="icon">
-                          <FaToolbox />
-                          <span className="h-tooltiptext">กำหนดสิทธิ</span>
-                        </Button>
-                        <Button className="ms-2 btn warning" bsPrefix="icon">
-                          <FaKey />
-                          <span className="h-tooltiptext">เปลี่ยนรหัส</span>
-                        </Button>
-                        <ArticleEdit/>
-                        <Button className="ms-2 btn" bsPrefix="icon" onClick={() => handleDeleteArticle(article.id)}>
-                          <FaTrashAlt />
-                          <span className="h-tooltiptext">ลบข้อมูล</span>
-                        </Button>
+          <Link href={`/article/edit/${article.id}`} className="mx-1 btn info icon icon-primary">
+                          <FaPen />
+                          <span className="h-tooltiptext">แก้ไขข้อมูล</span>
+                        </Link>
+                        
+                        <DeleteModal data={article} apiDelete={() => deleteArticle(article.id)} />
                       </td>
         </tr>
       ))}
