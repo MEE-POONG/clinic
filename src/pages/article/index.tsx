@@ -128,7 +128,7 @@
         <tr key={article.id}>
           <td>{index+1}</td>
           <td>{article.title}</td>
-          <td>{article.img}</td>
+          <td><Image src={`data:image/png;base64, ${article.img}`} alt="Article Image" thumbnail /></td>
           <td>{article.detail}</td>
           <td>{article.createdAt}</td>
           <td>
