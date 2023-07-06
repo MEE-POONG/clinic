@@ -120,18 +120,18 @@ const [{ loading: updateMemberLoading, error: updateMemberError }, putContactcli
           <Card.Body>
             <Row>
               <Col lg="3" className="text-center">
-                <Image src="./images/logo-default.png" width={'200px'} className="m-3" alt="picture1" />
+                <Image src="/images/logo-default.png" width={'200px'} className="m-3" alt="picture1" />
                 <div className="d-flex justify-content-center">
                   <div className="btn btn-primary btn-rounded">
                     <label className="form-label text-white m-1" htmlFor="customFile1">picture1</label>
                     <input type="file" className="form-control d-none" id="customFile1" defaultValue={picture1}/>
                   </div>
                 </div>
-                <Image src="./images/logo-default.png" width={'200px'} className="m-3" alt="picture2" />
+                <Image src="/images/logo-default.png" width={'200px'} className="m-3" alt="picture2" />
                 <div className="d-flex justify-content-center">
                   <div className="btn btn-primary btn-rounded">
                     <label className="form-label text-white m-1" htmlFor="customFile1">picture2</label>
-                    <input type="file" className="form-control d-none" id="customFile1" defaultValue={picture2} />
+                    <input type="file" className="form-control d-none" id="customFile1" defaultValue={picture2} onChange={e=>{setpicture1(e.target.value)}}/>
                   </div>
                 </div>
               </Col>
