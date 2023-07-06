@@ -85,7 +85,18 @@ const articleAdd: React.FC = () => {
       }
     });
   };
-
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        const splittedString = base64String.split(",")[1]; // ตัดส่วน "data:image/png;base64," ออก
+        setimg(splittedString);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
@@ -175,11 +186,13 @@ const articleAdd: React.FC = () => {
                   <Form.Control
                     isValid={inputForm && img !== ""}
                     isInvalid={inputForm && img === ""}
-                    type="article"
+                    type="file"
                     defaultValue={img}
-                    onChange={e => setimg(e.target.value)}
+                    onChange={handleFileUpload}
                     placeholder="img"
-                  />
+                  /> 
+
+
                 </FloatingLabel>
               </Col>
               <Col md={4}>
