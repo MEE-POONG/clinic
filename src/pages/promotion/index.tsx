@@ -37,6 +37,7 @@ const Promotion: React.FC = () => {
   const [filteredpromotionsData, setFilteredpromotionsData] = useState<Promotion[]>([]);
 
 
+
   useEffect(() => {
     setFilteredpromotionsData(PromotionData?.promotion ?? []);
     console.log(PromotionData);
@@ -117,6 +118,7 @@ const Promotion: React.FC = () => {
                   <th className="name">ชื่อโปรโมชั่น</th>
                   <th className="bank">คำอธิบายย่อย</th>
                   <th>รายละเอียด</th>
+                  <th>โค๊ตรูปภาพ</th>
                   <th>รูปภาพ</th>
                   <th>จัดการ</th>
                 </tr>
@@ -131,8 +133,14 @@ const Promotion: React.FC = () => {
                     <td>{promotion.subtitle}</td>
                     <td>{promotion.detail}</td>
                     <td>{promotion.img}</td>
-                    <td>
+                    <td><img src="./img/logo-default.png" alt="Promotion" /></td>
 
+                    {/* <img src={promotion.img} alt="Promotion" /> */}
+                    
+
+
+
+                    <td> 
                       <PromotionAddPromotionModal data={promotion} />
                       {/* <EditMemberModal data={member} apiEdit={() => editMember(editList)} /> */}
                       <Link href={`/promotion/edit/${promotion.id}`} className="mx-1 btn info icon icon-primary">
