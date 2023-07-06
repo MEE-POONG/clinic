@@ -23,6 +23,7 @@ const PromotionAdd: React.FC = () => {
   const [title, settitle] = useState<string>("");
   const [subtitle, setsubtitle] = useState<string>("");
   const [detail, setdetail] = useState<string>("");
+  const [img, setimg] = useState<string>("");
  /* const [img, setimg] = useState<string>("");*/
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
@@ -55,8 +56,8 @@ const PromotionAdd: React.FC = () => {
           settitle(data?.data?.title || "");
           setsubtitle(data?.data?.subtitle || "")
           setdetail(data?.data?.detail || "")
-        /*  setimg(data?.data?.img || "")
-          setBank(data?.data?.bank || "")
+          setimg(data?.data?.img || "")
+         /* setBank(data?.data?.bank || "")
           setBankAccount(data?.data?.bankAccount || "")
           setPhone(data?.data?.phone || "")
           setLine(data?.data?.line || "")
@@ -72,8 +73,8 @@ const PromotionAdd: React.FC = () => {
         settitle(data?.data?.title || "");
         setsubtitle(data?.data?.subtitle || "")
         setdetail(data?.data?.detail || "")
-       /* setimg(data?.data?.img || "")
-       setUsername(data?.data?.username || "");
+        setimg(data?.data?.img || "")
+       /*setUsername(data?.data?.username || "");
         setPassword(data?.data?.password || "")
         setFirstname(data?.data?.firstname || "")
         setLastname(data?.data?.lastname || "")
@@ -85,7 +86,18 @@ const PromotionAdd: React.FC = () => {
       }
     });
   };
-
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        const splittedString = base64String.split(",")[1]; // ตัดส่วน "data:image/png;base64," ออก
+        setimg(splittedString);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
@@ -94,8 +106,8 @@ const PromotionAdd: React.FC = () => {
     if (!title) missingFields.push("title");
     if (!subtitle) missingFields.push("subtitle");
     if (!detail) missingFields.push("detail");
-  /*  if (!img) missingFields.push("img");
-    if (!phone) missingFields.push("phone");
+    if (!img) missingFields.push("img");
+    /*if (!phone) missingFields.push("phone");
     if (!bank) missingFields.push("bank");
     if (!bankAccount) missingFields.push("bankAccount");
     if (!line) missingFields.push("line");*/
@@ -112,7 +124,7 @@ const PromotionAdd: React.FC = () => {
           title,
           subtitle,
           detail,
-          /*img,*/
+          img,
         };
 
 
@@ -192,6 +204,18 @@ const PromotionAdd: React.FC = () => {
                     onChange={e => setdetail(e.target.value)}
                     placeholder="detail"
                   />
+                </FloatingLabel>
+              </Col>
+
+               <Col md={4}>
+                <FloatingLabel controlId="img" label="img / รูปภาพ" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && img !== ""}
+                    isInvalid={inputForm && img === ""}
+                    type="file"
+                    defaultValue={img}
+                    onChange={handleFileUpload}
+                    placeholder="img"/> 
                 </FloatingLabel>
               </Col>
             

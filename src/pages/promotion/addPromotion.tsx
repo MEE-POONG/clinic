@@ -39,6 +39,19 @@ const PromotionAdd: React.FC = () => {
     setCheckBody("");
   }
 
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        const splittedString = base64String.split(",")[1]; // ตัดส่วน "data:image/png;base64," ออก
+        setimg(splittedString);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     event.stopPropagation();
@@ -136,6 +149,17 @@ const PromotionAdd: React.FC = () => {
                     onChange={e => setdetail(e.target.value)}
                     placeholder="detail"
                   />
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="img" label="img / รูปภาพ" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && img !== ""}
+                    isInvalid={inputForm && img === ""}
+                    type="file"
+                    defaultValue={img}
+                    onChange={handleFileUpload}
+                    placeholder="img"/> 
                 </FloatingLabel>
               </Col>
 
