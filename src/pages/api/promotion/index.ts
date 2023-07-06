@@ -12,16 +12,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const page: number = Number(req.query.page) || 1;
                 const pageSize: number = Number(req.query.pageSize) || 10;
 
-                const promotions = await prisma.promotion.findMany({
+                const promotion = await prisma.promotion.findMany({
                     skip: (page - 1) * pageSize,
                     take: pageSize,
                 });
 
-                const totalpromotions = await prisma.promotion.count();
-                const totalPage: number = Math.ceil(totalpromotions / pageSize);
-                res.status(200).json({ promotions, page, pageSize, totalPage });
+                const totalpromotion = await prisma.promotion.count();
+                const totalPage: number = Math.ceil(totalpromotion / pageSize);
+                res.status(200).json({ promotion });
             } catch (error) {
-                res.status(500).json({ error: "An error occurred while fetching the promotions" });
+                res.status(500).json({ error: "An error occurred while fetching the promotion" });
             }
             break;
 

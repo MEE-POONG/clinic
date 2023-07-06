@@ -11,91 +11,92 @@ datasource db {
 }
 
 model Admin {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
   adminusername String?
-  adminpassword  String?
-  sex String?
-  tel String?
-  email String?
-  createdAt  DateTime? @default(now())
-  updatedAt  DateTime? @updatedAt
-  deleted_at DateTime? @map("deleted_at")
-  
+  adminpassword String?
+  sex           String?
+  tel           String?
+  email         String?
+  createdAt     DateTime? @default(now())
+  updatedAt     DateTime? @updatedAt
+  deleted_at    DateTime? @map("deleted_at")
 }
-model User{
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  fname String?
-  lname String?
-  nickname String?
-  sex String?
-  username String?
-  password String?
-  email String?
-  line String?
-  tel String?
-  createdAt  DateTime? @default(now())
-  updatedAt  DateTime? @updatedAt
-  deleted_at DateTime? @map("deleted_at")
 
+model User {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  fname      String?
+  lname      String?
+  nickname   String?
+  sex        String?
+  username   String?
+  password   String?
+  email      String?
+  line       String?
+  tel        String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  deleted_at DateTime? @map("deleted_at")
 }
+
 model Contactclinic {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String?
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  title    String?
   subtitle String?
-  detail1 String?
-  detail2 String?
+  detail1  String?
+  detail2  String?
   picture1 String?
   picture2 String?
-
 }
 
 model ContactSocialMedia {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  facebook String?
-  line String?
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  facebook  String?
+  line      String?
   instagram String?
-  twitter String?
-  youtube String?
+  twitter   String?
+  youtube   String?
 }
 
-model Serviceclinic{
-  id String    @id @default(auto()) @map("_id") @db.ObjectId
-  title String?
+model Serviceclinic {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  title    String?
   subtitle String?
-  img String?
+  img      String?
   category String?
 }
 
-model SubServiceclinic{
-  id String    @id @default(auto()) @map("_id") @db.ObjectId
-  title String?
-  subTitle String?
-  img String?
-  category String?
-  reviewimg String?
+model SubServiceclinic {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  title        String?
+  subTitle     String?
+  img          String?
+  category     String?
+  reviewimg    String?
   reviewdetail String?
-  price String?
+  price        String?
 }
 
-
-model Review{
-  id String    @id @default(auto()) @map("_id") @db.ObjectId
-  title String?
-  title2 String?
-  category String?
-  subTitle String?
-  img String?
-  reviewImg String?
+model Review {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  title        String?
+  title2       String?
+  category     String?
+  subTitle     String?
+  img          String?
+  reviewImg    String?
   reviewDetail String?
   reviewerName String?
-  date  DateTime? 
+  date         DateTime?
 }
 
-model Promotion{
-  id String    @id @default(auto()) @map("_id") @db.ObjectId
-  title String?
-  img String?
-  date DateTime?
+model Promotion {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  title    String?
+  subtitle String?
+  detail  String?
+  img      String?
+  date     DateTime?
+
 }
 
 model AboutClinic {
@@ -128,12 +129,11 @@ model Article {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   title      String?
   img        String?
-  detail    String?
+  detail     String?
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
   deleted_at DateTime? @map("deleted_at")
 }
-
 
 // model Admin {
 //   id String @id @default(auto()) @map("_id") @db.ObjectId
@@ -145,7 +145,7 @@ model Article {
 //   createdAt  DateTime? @default(now())
 //   updatedAt  DateTime? @updatedAt
 //   deleted_at DateTime? @map("deleted_at")
-  // user  User[]
+// user  User[]
 
 // }
 // model User{
