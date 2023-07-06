@@ -57,6 +57,8 @@ const [{ loading: updateMemberLoading, error: updateMemberError }, putContactcli
               subtitle,
               detail1,
               detail2,
+              picture1,
+              picture2,
             
            
             };
