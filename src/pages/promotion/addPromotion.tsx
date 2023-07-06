@@ -13,15 +13,11 @@ const PromotionAdd: React.FC = () => {
   const [title, settitle] = useState<string>("");
   const [subtitle, setsubtitle] = useState<string>("");
   const [detail, setdetail] = useState<string>("");
- /*const [lastname, setLastname] = useState<string>("");
-  const [bank, setBank] = useState<string>("เลือกธนาคาร");
-  const [bankAccount, setBankAccount] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
-  const [line, setLine] = useState<string>("");
-  const [email, setEmail] = useState<string>("");*/
+  const [img, setimg] = useState<string>("");
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
   const [checkBody, setCheckBody] = useState<string>("");
+ 
 
   const handleInputChange = (setter: any) => (event: any) => {
     const newValue = event.target.value;
@@ -50,7 +46,7 @@ const PromotionAdd: React.FC = () => {
     if (!title) missingFields.push("title");
     if (!subtitle) missingFields.push("subtitle");
     if (!detail) missingFields.push("detail");
-    /*if (!img) missingFields.push("img");*/
+    // if (!img) missingFields.push("img");
     if (missingFields.length > 0) {
       setAlertForm("warning");
       setInputForm(true);
@@ -64,6 +60,7 @@ const PromotionAdd: React.FC = () => {
          title,
          subtitle,
          detail,
+         img,
          
         };
 
@@ -82,6 +79,8 @@ const PromotionAdd: React.FC = () => {
       }
     }
   };
+
+
   
   return (
     <LayOut>
@@ -139,8 +138,9 @@ const PromotionAdd: React.FC = () => {
                   />
                 </FloatingLabel>
               </Col>
-              
-             
+
+
+               
             </Row>
           </Card.Body>
           <Card.Footer className="text-end">

@@ -133,6 +133,7 @@ const [{ loading: updateMemberLoading, error: updateMemberError }, putContactcli
                     <label className="form-label text-white m-1" htmlFor="customFile1">picture2</label>
                     <input type="file" className="form-control d-none" id="customFile1" defaultValue={picture2} onChange={e=>{setpicture1(e.target.value)}}/>
                   </div>
+                  
                 </div>
               </Col>
               <Col lg="9" >

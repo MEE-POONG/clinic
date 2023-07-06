@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
-import { Badge, Card, Button, Form, InputGroup, Table } from "react-bootstrap";
+import { Badge, Card, Button,Image, Form, InputGroup, Table } from "react-bootstrap";
 import { FaPen, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
@@ -114,11 +114,10 @@ const Promotion: React.FC = () => {
             <Table striped bordered hover className="scroll">
               <thead>
                 <tr>
-                  <th className="first">No</th>
-                  <th className="name">ชื่อโปรโมชั่น</th>
-                  <th className="bank">คำอธิบายย่อย</th>
+                  <th className="no">No</th>
+                  <th className="title">ชื่อโปรโมชั่น</th>
+                  <th className="subtitle">คำอธิบายย่อย</th>
                   <th>รายละเอียด</th>
-                  <th>โค๊ตรูปภาพ</th>
                   <th>รูปภาพ</th>
                   <th>จัดการ</th>
                 </tr>
@@ -132,8 +131,7 @@ const Promotion: React.FC = () => {
                     <td>{promotion.title}</td>
                     <td>{promotion.subtitle}</td>
                     <td>{promotion.detail}</td>
-                    <td>{promotion.img}</td>
-                    <td><img src="./img/logo-default.png" alt="Promotion" /></td>
+                    <td><Image src={`data:image/png;base64, ${promotion.img}`} alt="Promotion imge" thumbnail /></td>
 
                     {/* <img src={promotion.img} alt="Promotion" /> */}
                     
