@@ -99,7 +99,7 @@ const Promotion: React.FC = () => {
               </InputGroup.Text>
               <Form.Control
                 onChange={e => handleChangeSearchTerm(e.target.value)}
-                placeholder="ค้นหาผู้ใช้"
+                placeholder="ค้นหาโปรโมชั่น"
                 aria-label="Fullname"
                 aria-describedby="basic-addon1"
               />
