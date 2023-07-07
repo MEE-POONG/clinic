@@ -13,6 +13,7 @@ const subServiceclinic: React.FC = () => {
   const [category, setcategory] = useState<string>("");
   const [reviewdetail, setreviewdetail] = useState<string>("");
   const [price, setprice] = useState<string>("");
+  const [img, setimg] = useState<string>("");
 
 
   const [{ data: subServiceclinicData }, getsubServiceclinic,] = useAxios({
@@ -26,40 +27,59 @@ const subServiceclinic: React.FC = () => {
     setcategory(subServiceclinicData?.subServices?.category);
     setreviewdetail(subServiceclinicData?.subServices?.reviewdetail);
     setprice(subServiceclinicData?.subServices?.price);
+    setimg(subServiceclinicData?.subServices?.img);
   }, [subServiceclinicData]);
 
   const [{ loading: updateMemberLoading, error: updateMemberError }, putsubServiceclinic,] = useAxios({
   }, { manual: true });
 
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        const splittedString = base64String.split(",")[1]; // ตัดส่วน "data:image/png;base64," ออก
+        if (event.target.id === "customFile1") {
+            setimg(splittedString);
+          } else 
+          event.target.value = ''; // รีเซ็ตค่าอินพุตไฟล์ที่อัปโหลด
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     event.stopPropagation();
-    let missingFields = [];
-    const data = {
-        title,
+    //let missingFields = [];
+    //if (!title) missingFields.push("title");
+    //if (!subTitle) missingFields.push("subTitle");
+
+    //console.log(missingFields);
+
+
+      // อัพโหลดรูปภาพ img1
+const response1 = await putsubServiceclinic({
+  url: "/api/subServiceclinic/" + id,
+    method: "PUT",
+    data: {
+      title,
         subTitle,
         category,
         reviewdetail,
         price,
-      };
+        img,
+    },
+  });
+  if (response1 && response1.status === 200) {
+    console.log("Image 1 uploaded successfully");
+  } else {
+    throw new Error("Failed to update image 1");
+  }
 
-
-    // Execute the update
-    const response = await putsubServiceclinic({
-        url: "/api/subServiceclinic/" + id,
-        method: "PUT",
-        data
-    });
-    if (response && response.status === 200) {
-        console.log(response);
-        console.log("put done");
-
-    } else {
-
-        throw new Error('Failed to update data');
-    }
-
-}; 
+ 
+};
 
   return (
     <LayOut>
@@ -92,20 +112,14 @@ const subServiceclinic: React.FC = () => {
           <Card.Body>
             <Row>
               <Col lg="3" className="text-center">
-                <Image src="./images/logo-default.png" width={'200px'} className="m-3" alt="picture1" />
+              <Image src={`data:image/png;base64, ${img}`} width="300px" height="200px" alt="Article Image" thumbnail  />
                 <div className="d-flex justify-content-center">
                   <div className="btn btn-primary btn-rounded">
                     <label className="form-label text-white m-1" htmlFor="customFile1">picture1</label>
-                    <input type="file" className="form-control d-none" id="customFile1" />
+                    <input type="file" className="form-control d-none" id="customFile1" onChange={handleFileUpload} />
                   </div>
                 </div>
-                <Image src="./images/logo-default.png" width={'200px'} className="m-3" alt="picture2" />
-                <div className="d-flex justify-content-center">
-                  <div className="btn btn-primary btn-rounded">
-                    <label className="form-label text-white m-1" htmlFor="customFile1">picture2</label>
-                    <input type="file" className="form-control d-none" id="customFile1" />
-                  </div>
-                </div>
+
               </Col>
               <Col lg="9" >
                 <Row>
