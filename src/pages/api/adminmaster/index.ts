@@ -1,4 +1,4 @@
-import { PrismaClient , Admin } from "@prisma/client";
+import { PrismaClient , Adminmaster } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient();
@@ -12,28 +12,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const page: number = Number(req.query.page) || 1;
                 const pageSize: number = Number(req.query.pageSize) || 10;
 
-                const admins = await prisma.admin.findMany({
+                const adminmaster = await prisma.adminmaster.findMany({
                     skip: (page - 1) * pageSize,
                     take: pageSize,
                 });
 
-                const totaladmins = await prisma.admin.count();
-                const totalPage: number = Math.ceil(totaladmins / pageSize);
-                res.status(200).json({ admins, page, pageSize, totalPage });
+                const totaladminmaster = await prisma.adminmaster.count();
+                const totalPage: number = Math.ceil(totaladminmaster / pageSize);
+                res.status(200).json({ adminmaster, page, pageSize, totalPage });
             } catch (error) {
-                res.status(500).json({ error: "An error occurred while fetching the admins" });
+                res.status(500).json({ error: "An error occurred while fetching the adminmaster" });
             }
             break;
 
         case 'POST':
             try {
-                const newadmin = await prisma.admin.create({
+                const newadminmaster = await prisma.adminmaster.create({
                     data: req.body,
                 });
 
-                res.status(201).json(newadmin);
+                res.status(201).json(newadminmaster);
             } catch (error) {
-                res.status(500).json({ error: "An error occurred while creating the admin" });
+                res.status(500).json({ error: "An error occurred while creating the adminmaster" });
             }
             break;
 
