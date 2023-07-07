@@ -15,6 +15,7 @@ const AdminmasterAdd: React.FC = () => {
   const [sex, setsex] = useState<string>("");
   const [tel, settel] = useState<string>("");
   const [email, setemail] = useState<string>("");
+  
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
   const [checkBody, setCheckBody] = useState<string>("");
@@ -129,7 +130,7 @@ const AdminmasterAdd: React.FC = () => {
                     type="text"
                     value={adminUsername}
                     onChange={e => setadminUsername(e.target.value)}
-                    placeholder="name@example.com"
+                    placeholder="adminUsername"
                   />
                 </FloatingLabel>
               </Col>

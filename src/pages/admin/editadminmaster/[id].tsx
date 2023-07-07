@@ -55,11 +55,6 @@ const AdminmasterAdd: React.FC = () => {
           setsex(data?.data?.sex || "")
           settel(data?.data?.tel || "")
           setemail(data?.data?.email || "")
-         /* setBank(data?.data?.bank || "")
-          setBankAccount(data?.data?.bankAccount || "")
-          setPhone(data?.data?.phone || "")
-          setLine(data?.data?.line || "")
-          setEmail(data?.data?.email || "")*/
         }
       });
     }
@@ -107,10 +102,7 @@ const AdminmasterAdd: React.FC = () => {
     if (!sex) missingFields.push("sex");
     if (!tel) missingFields.push("tel");
     if (!email) missingFields.push("email");
-    /*if (!phone) missingFields.push("phone");
-    if (!bank) missingFields.push("bank");
-    if (!bankAccount) missingFields.push("bankAccount");
-    if (!line) missingFields.push("line");*/
+  
 
     if (missingFields.length > 0) {
       setAlertForm("warning");
