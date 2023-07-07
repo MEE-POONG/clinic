@@ -123,11 +123,11 @@ const ReviewAdd: React.FC = () => {
     if (!img) missingFields.push("img");
     if (!reviewDetail) missingFields.push("reviewDetail"); 
     if (!reviewerName) missingFields.push("reviewerName");  
-  /*  if (!img) missingFields.push("img");
-    if (!phone) missingFields.push("phone");
-    if (!bank) missingFields.push("bank");
-    if (!bankAccount) missingFields.push("bankAccount");
-    if (!line) missingFields.push("line");*/
+  // /*  if (!img) missingFields.push("img");
+  //   if (!phone) missingFields.push("phone");
+  //   if (!bank) missingFields.push("bank");
+  //   if (!bankAccount) missingFields.push("bankAccount");
+  //   if (!line) missingFields.push("line");*/
 
     if (missingFields.length > 0) {
       setAlertForm("warning");
