@@ -154,8 +154,7 @@ const PartnerPage: React.FC = () => {
                     <Card.Body>
                         <Row>
                             <Col lg="3" className="text-center">
-            <Image src={`data:image/png;base64, ${img}`} width="300px" height="200px" alt="Article Image" thumbnail  />
-
+                                <Image src={`data:image/png;base64, ${img}`} width="300px" height="200px" alt="Article Image" thumbnail  />
                                 <div className="d-flex justify-content-center">
                                     <div className="btn btn-primary btn-rounded">
                                         <label className="form-label text-white m-1" htmlFor="customFile1">Upload </label>
