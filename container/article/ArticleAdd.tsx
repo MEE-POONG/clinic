@@ -77,11 +77,11 @@ const ArticleAdd: React.FC = () => {
     return (
         <>
             <Button className="ms-2 btn" bsPrefix="icon" onClick={handleShowModal}>
-                เพิ่ม Admin
+                เพิ่ม Article
             </Button>
             <Modal show={showModal} onHide={handleCloseModal} size="lg" centered>
                 <Modal.Header >
-                    เพิ่มข้อมูลแอดมินใหม่
+                    เพิ่มข้อมูล Article ใหม่
                 </Modal.Header>
                 <Modal.Body>
                     <Row>
@@ -100,12 +100,12 @@ const ArticleAdd: React.FC = () => {
                             </InputGroup>
                         </Col>
                         <Col lg="6">
-                        <div className="d-flex justify-content-center">
-                  <div className="btn btn-primary btn-rounded">
-                    <label className="form-label text-white m-1" htmlFor="customFile1">Upload image 1</label>
-                    <input type="file" className="form-control d-none" id="customFile1" onChange={handleFileUpload}  />
-                  </div>
-                </div>
+                            <div className="d-flex justify-content-center">
+                    <div className="btn btn-primary btn-rounded">
+                        <label className="form-label text-white m-1" htmlFor="customFile1">Upload image 1</label>
+                        <input type="file" className="form-control d-none" id="customFile1" onChange={handleFileUpload}  />
+                    </div>
+                    </div>
                         </Col>
                         <Col lg="6">
                             <InputGroup className="w-auto mb-3" bsPrefix="input-icon">
