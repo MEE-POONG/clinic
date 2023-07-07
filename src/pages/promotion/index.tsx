@@ -7,10 +7,8 @@ import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
 import { bankMap } from "@/test";
-import PartnerViewpromotionModal from "@/container/Partner/ViewModal";
 import DeleteModal from "@/components/modal/DeleteModal";
 import PromotionAddPromotionModal from "@/container/Promotion/AddPromotion";
-import PartnerViewMemberModal from "@/container/Partner/ViewModal";
 import { Promotion } from '@prisma/client';
 
 interface Params {
