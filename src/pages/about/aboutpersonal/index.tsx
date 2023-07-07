@@ -57,11 +57,29 @@ const PartnerPage: React.FC = () => {
 
     }, [title]);
 
+    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files && event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const base64String = reader.result as string;
+            const splittedString = base64String.split(",")[1]; // ตัดส่วน "data:image/png;base64," ออก
+            if (event.target.id === "customFile1") {
+                setImg(splittedString);
+              } else if (event.target.id === "customFile2") {
+                setImg2(splittedString);
+              }
+              event.target.value = ''; // รีเซ็ตค่าอินพุตไฟล์ที่อัปโหลด
+          };
+          reader.readAsDataURL(file);
+        }
+      };
 
 
 
 
-    const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
+    
+      const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
         event.stopPropagation();
         //let missingFields = [];
@@ -71,34 +89,38 @@ const PartnerPage: React.FC = () => {
         //console.log(missingFields);
 
 
-        const data = {
+          // อัพโหลดรูปภาพ img1
+    const response1 = await putAboutPersonal({
+        url: "/api/aboutpersonal/" + id,
+        method: "PUT",
+        data: {
             title,
             subTitle,
             detail1,
             detail2,
-         
-          };
+            img,
+        },
+      });
+      if (response1 && response1.status === 200) {
+        console.log("Image 1 uploaded successfully");
+      } else {
+        throw new Error("Failed to update image 1");
+      }
   
-
-        // Execute the update
-        const response = await putAboutPersonal({
-            url: "/api/aboutpersonal/" + id,
-            method: "PUT",
-            data
-        });
-        if (response && response.status === 200) {
-            console.log(response);
-            console.log("put done");
-
-        } else {
-
-            throw new Error('Failed to update data');
-        }
-
+      // อัพโหลดรูปภาพ img2
+      const response2 = await putAboutPersonal({
+        url: "/api/aboutpersonal/" + id,
+        method: "PUT",
+        data: {
+          img2,
+        },
+      });
+      if (response2 && response2.status === 200) {
+        console.log("Image 2 uploaded successfully");
+      } else {
+        throw new Error("Failed to update image 2");
+      }
     };
-
-
-
 
 
 
@@ -133,18 +155,18 @@ const PartnerPage: React.FC = () => {
                     <Card.Body>
                         <Row>
                             <Col lg="3" className="text-center">
-                                <Image src="./images/logo-default.png" width={'200px'} className="m-3" alt="img " />
+                            <Image src={`data:image/png;base64, ${img}`} width="300px" height="200px" alt="Article Image" thumbnail  />
                                 <div className="d-flex justify-content-center">
                                     <div className="btn btn-primary btn-rounded">
-                                        <label className="form-label text-white m-1" htmlFor="customFile1">img </label>
-                                        <input type="file" className="form-control d-none" id="customFile1" />
+                                        <label className="form-label text-white m-1" htmlFor="customFile1">UploadImage </label>
+                                        <input type="file" className="form-control d-none" id="customFile1" onChange={handleFileUpload} />
                                     </div>
                                 </div>
-                                <Image src="./images/logo-default.png" width={'200px'} className="m-3" alt="img2" />
+                                <Image src={`data:image/png;base64, ${img2}`} width="300px" height="200px" alt="Article Image" thumbnail  />
                                 <div className="d-flex justify-content-center">
                                     <div className="btn btn-primary btn-rounded">
-                                        <label className="form-label text-white m-1" htmlFor="customFile1">img2</label>
-                                        <input type="file" className="form-control d-none" id="customFile1" />
+                                        <label className="form-label text-white m-1" htmlFor="customFile2">UploadImage2</label>
+                                        <input type="file" className="form-control d-none" id="customFile2" onChange={handleFileUpload}/>
                                     </div>
                                 </div>
                             </Col>
