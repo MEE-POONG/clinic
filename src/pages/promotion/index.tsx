@@ -7,10 +7,8 @@ import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
 import { bankMap } from "@/test";
-import PartnerViewpromotionModal from "@/container/Partner/ViewModal";
 import DeleteModal from "@/components/modal/DeleteModal";
 import PromotionAddPromotionModal from "@/container/Promotion/AddPromotion";
-import PartnerViewMemberModal from "@/container/Partner/ViewModal";
 import { Promotion } from '@prisma/client';
 
 interface Params {
@@ -39,7 +37,7 @@ const Promotion: React.FC = () => {
 
 
   useEffect(() => {
-    setFilteredpromotionsData(PromotionData?.data ?? []);
+    setFilteredpromotionsData(PromotionData?.promotion ?? []);
     console.log(PromotionData);
 
   }, [PromotionData]);
@@ -141,7 +139,7 @@ const Promotion: React.FC = () => {
 
                     <td> 
                       <PromotionAddPromotionModal data={promotion} />
-                      {/* <EditMemberModal data={member} apiEdit={() => editMember(editList)} /> */}
+                      {/* <EditpromotionModal data={promotion} apiEdit={() => editpromotion(editList)} /> */}
                       <Link href={`/promotion/edit/${promotion.id}`} className="mx-1 btn info icon icon-primary">
                         <FaPen />
                         <span className="h-tooltiptext">แก้ไขข้อมูล</span>
