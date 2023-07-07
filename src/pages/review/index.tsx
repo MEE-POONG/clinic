@@ -9,7 +9,8 @@ import PageSelect from "@/components/PageSelect";
 import { bankMap } from "@/test";
 import DeleteModal from "@/components/modal/DeleteModal";
 import { Review } from '@prisma/client';
-/*import promotion from "../api/promotion";*/
+import ReviewAddReviewModal from "@/container/Review/AddReview";
+/*import review from "../api/review";*/
 
 interface Params {
     page: number;
@@ -42,32 +43,41 @@ const Review: React.FC = () => {
     const [reviewerName, setreviewerName] = useState<string>("");
      
 
-    const [{ loading: deletearticleLoading, error: deletearticleError }, executearticleDelete,] = useAxios({}, { manual: true });
+    const [{ loading: deletereviewLoading, error: deletereviewError }, executereviewDelete,] = useAxios({}, { manual: true });
 
     const [filteredreviewData, setfilteredreviewData] = useState<Review[]>([]);
 
    useEffect(() => {
-    //     setid(reviewData?.reviewls?.id)
-    //     settitle(reviewData?.reviewls?.title)
-    //     settitle2(reviewData?.reviewls?.title2)
-    //     setcategory(reviewData?.reviewls?.category)
-    //     setsubTitle(reviewData?.reviewls?.Title)
-    //     setreviewDetail(reviewData?.reviewls?.reviewDetail)
-    //     setreviewerName(reviewData?.reviewls?.reviewerName)
+        setid(reviewData?.reviewls?.id)
+        settitle(reviewData?.reviewls?.title)
+        settitle2(reviewData?.reviewls?.title2)
+        setcategory(reviewData?.reviewls?.category)
+        setsubTitle(reviewData?.reviewls?.Title)
+        setreviewDetail(reviewData?.reviewls?.reviewDetail)
+        setreviewerName(reviewData?.reviewls?.reviewerName)
 
 
 
-    //     console.log(reviewData?.reviewls?.title);
-    //     setfilteredreviewData(reviewData?.reviewls ?? []);
-    //     console.log(title);
+        console.log(reviewData?.reviewls?.title);
+        setfilteredreviewData(reviewData?.reviewls ?? []);
+        console.log(title);
     
-    //    }, [reviewData]);
+       }, [reviewData]);
 
-    //    useEffect(() => {
-    //     setfilteredreviewData(reviewData?.reviewls?? []);
+       useEffect(() => {
+        setfilteredreviewData(reviewData?.reviewls?? []);
         console.log(reviewData);
     
       }, [reviewData]);
+
+      const deletereview = (id: string): Promise<any> => {
+        return executereviewDelete({
+          url: "/api/review/" + id,
+          method: "DELETE",
+        }).then(() => {
+            setfilteredreviewData(prevreviews => prevreviews.filter(review => review.id !== id));
+        });
+      };
 
 
       const handleChangePage = (page: number) => {
@@ -129,6 +139,19 @@ const Review: React.FC = () => {
             <td>{review.subTitle}</td>
             <td>{review.reviewDetail}</td>
             <td>{review.reviewerName}</td>
+
+            <td>
+
+                        <ReviewAddReviewModal data={review} />
+                        {/* <EditMemberModal data={member} apiEdit={() => editMember(editList)} /> */}
+                        <Link href={`/review/edit/${review.id}`} className="mx-1 btn info icon icon-primary">
+                          <FaPen />
+                          <span className="h-tooltiptext">แก้ไขข้อมูล</span>
+                        </Link>
+                        <DeleteModal data={review} apiDelete={() => deletereview(review.id)} />
+                      </td>
+
+            
             
           </tr>
         ))}
