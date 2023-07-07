@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
-import { Badge, Card, Form, InputGroup, Table } from "react-bootstrap";
+import { Badge, Card, Form, InputGroup, Table, Image } from 'react-bootstrap';
 import { FaPen, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
@@ -39,6 +39,7 @@ const Review: React.FC = () => {
     const [title2, settitle2] = useState<string>("");
     const [category, setcategory] = useState<string>("");
     const [subTitle, setsubTitle] = useState<string>("");
+    const [img, setimg] = useState<string>("");
     const [reviewDetail, setreviewDetail] = useState<string>("");
     const [reviewerName, setreviewerName] = useState<string>("");
      
@@ -53,6 +54,7 @@ const Review: React.FC = () => {
         settitle2(reviewData?.reviewls?.title2)
         setcategory(reviewData?.reviewls?.category)
         setsubTitle(reviewData?.reviewls?.Title)
+        setimg(reviewData?.reviewls?.img)
         setreviewDetail(reviewData?.reviewls?.reviewDetail)
         setreviewerName(reviewData?.reviewls?.reviewerName)
 
@@ -112,6 +114,9 @@ const Review: React.FC = () => {
                 </h4>
     
                 {/* <AddListName /> */}
+                <Link href="/review/addReview" className="ms-2 btn icon icofn-primary">
+              เพิ่มรีวิว
+            </Link>
     
               </Card.Header>
               <Card.Body className="p-0">
@@ -123,6 +128,7 @@ const Review: React.FC = () => {
           <th>title2</th>
           <th>category</th>
           <th>subTitle</th>
+          <th>รูปภาพ</th>
           <th>reviewDetail</th>
           <th>reviewerName</th>
           <th>edit</th>
@@ -137,6 +143,7 @@ const Review: React.FC = () => {
             <td>{review.title2}</td>
             <td>{review.category}</td>
             <td>{review.subTitle}</td>
+            <td><Image src={`data:image/png;base64, ${review.img}`} alt="review imge" thumbnail /></td>
             <td>{review.reviewDetail}</td>
             <td>{review.reviewerName}</td>
 

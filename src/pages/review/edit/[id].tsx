@@ -24,6 +24,7 @@ const ReviewAdd: React.FC = () => {
   const [title2, settitle2] = useState<string>("");
   const [category, setcategory] = useState<string>("");
   const [subTitle, setsubTitle] = useState<string>("");
+  const [img, setimg] = useState<string>("");
   const [reviewDetail, setreviewDetail] = useState<string>("");
   const [reviewerName, setreviewerName] = useState<string>("");
  /* const [img, setimg] = useState<string>("");*/
@@ -59,6 +60,7 @@ const ReviewAdd: React.FC = () => {
           settitle2(data?.data?.title2 || "")
           setcategory(data?.data?.category || "")
           setsubTitle(data?.data?.subTitle || "")
+          setimg(data?.data?.img || "")
           setreviewDetail(data?.data?.reviewDetail || "")
           setreviewerName(data?.data?.reviewerName || "")
         /*  setimg(data?.data?.img || "")
@@ -79,6 +81,7 @@ const ReviewAdd: React.FC = () => {
         settitle2(data?.data?.title2 || "")
         setcategory(data?.data?.category || "")
         setsubTitle(data?.data?.subTitle || "")
+        setimg(data?.data?.img || "")
         setreviewDetail(data?.data?.reviewDetail || "")
         setreviewerName(data?.data?.reviewerName || "")
        /* setimg(data?.data?.img || "")
@@ -95,6 +98,19 @@ const ReviewAdd: React.FC = () => {
     });
   };
 
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        const splittedString = base64String.split(",")[1]; // ตัดส่วน "data:image/png;base64," ออก
+        setimg(splittedString);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
 
   const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
@@ -104,6 +120,7 @@ const ReviewAdd: React.FC = () => {
     if (!title2) missingFields.push("title2");
     if (!category) missingFields.push("category"); 
     if (!subTitle) missingFields.push("subTitle");
+    if (!img) missingFields.push("img");
     if (!reviewDetail) missingFields.push("reviewDetail"); 
     if (!reviewerName) missingFields.push("reviewerName");  
   /*  if (!img) missingFields.push("img");
@@ -125,6 +142,7 @@ const ReviewAdd: React.FC = () => {
           title2,
           category,
           subTitle,
+          img,
           reviewDetail,
           reviewerName,
           /*img,*/
@@ -173,8 +191,8 @@ const ReviewAdd: React.FC = () => {
           </Card.Header>
           <Card.Body>
             <Row>
-              <Col md={4}>
-                <FloatingLabel controlId="title" label="title / ชื่อโปรโมชั่น" className="mb-3">
+            <Col md={4}>
+                <FloatingLabel controlId="title" label="title / ชื่อรีวิว" className="mb-3">
                   <Form.Control
                     isValid={inputForm && title !== ""}
                     isInvalid={inputForm && title === ""}
@@ -186,7 +204,7 @@ const ReviewAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="title2" label="title2 / คำอธิบายย่อย" className="mb-3">
+                <FloatingLabel controlId="title2" label="title2 / บริการที่ใช้" className="mb-3">
                   <Form.Control
                     isValid={inputForm && title2 !== ""}
                     isInvalid={inputForm && title2 === ""}
@@ -198,7 +216,7 @@ const ReviewAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="category" label="category / รายละเอียด" className="mb-3">
+                <FloatingLabel controlId="category" label="category / หมวดหมู่" className="mb-3">
                   <Form.Control
                     isValid={inputForm && category !== ""}
                     isInvalid={inputForm && category === ""}
@@ -209,6 +227,54 @@ const ReviewAdd: React.FC = () => {
                   />
                 </FloatingLabel>
               </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="subTitle" label="subTitle / หมวดหมู่" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && subTitle !== ""}
+                    isInvalid={inputForm && subTitle === ""}
+                    type="text"
+                    value={subTitle}
+                    onChange={e => setsubTitle(e.target.value)}
+                    placeholder="subTitle"
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="reviewDetail" label="reviewDetail / รายละเอียดรีวิว " className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && reviewDetail !== ""}
+                    isInvalid={inputForm && reviewDetail === ""}
+                    type="text"
+                    value={reviewDetail}
+                    onChange={e => setreviewDetail(e.target.value)}
+                    placeholder="reviewDetail"
+                  />
+                </FloatingLabel>
+              </Col>
+             < Col md={4}>
+                <FloatingLabel controlId="reviewerName" label="reviewerName / ผู้รีวิว" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && reviewerName !== ""}
+                    isInvalid={inputForm && reviewerName === ""}
+                    type="text"
+                    value={reviewerName}
+                    onChange={e => setreviewerName(e.target.value)}
+                    placeholder="reviewerName"
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="img" label="img / รูปภาพ" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && img !== ""}
+                    isInvalid={inputForm && img === ""}
+                    type="file"
+                    defaultValue={img}
+                    onChange={handleFileUpload}
+                    placeholder="img"/> 
+                </FloatingLabel>
+              </Col>
+              
               
             
           
