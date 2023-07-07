@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
-import { Badge, Card , Button, Form, InputGroup, Table } from "react-bootstrap";
+import { Badge, Card, Button,Image, Form, InputGroup, Table } from "react-bootstrap";
 import { FaPen, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
@@ -35,6 +35,7 @@ const Promotion: React.FC = () => {
   const [{ loading: deletepromotionLoading, error: deletepromotionError }, executepromotionDelete,] = useAxios({}, { manual: true });
 
   const [filteredpromotionsData, setFilteredpromotionsData] = useState<Promotion[]>([]);
+
 
 
   useEffect(() => {
@@ -99,7 +100,7 @@ const Promotion: React.FC = () => {
               </InputGroup.Text>
               <Form.Control
                 onChange={e => handleChangeSearchTerm(e.target.value)}
-                placeholder="ค้นหาผู้ใช้"
+                placeholder="ค้นหาโปรโมชั่น"
                 aria-label="Fullname"
                 aria-describedby="basic-addon1"
               />
@@ -113,9 +114,9 @@ const Promotion: React.FC = () => {
             <Table striped bordered hover className="scroll">
               <thead>
                 <tr>
-                  <th className="first">No.</th>
-                  <th className="name">ชื่อโปรโมชั่น</th>
-                  <th className="bank">คำอธิบายย่อย</th>
+                  <th className="no">No</th>
+                  <th className="title">ชื่อโปรโมชั่น</th>
+                  <th className="subtitle">คำอธิบายย่อย</th>
                   <th>รายละเอียด</th>
                   <th>รูปภาพ</th>
                   <th>จัดการ</th>
@@ -124,28 +125,33 @@ const Promotion: React.FC = () => {
 
 
               <tbody className="text-center">
-                {filteredpromotionsData.map((promotion,index) => (
-      <tr key={promotion.id}>
-        <td>{index+1}</td>
-        <td>{promotion.title}</td>
-        <td>{promotion.subtitle}</td>
-        <td>{promotion.detail}</td>
-        <td>{promotion.img}</td>
-        <td>
+                {filteredpromotionsData.map((promotion, index) => (
+                  <tr key={promotion.id}>
+                    <td>{index + 1}</td>
+                    <td>{promotion.title}</td>
+                    <td>{promotion.subtitle}</td>
+                    <td>{promotion.detail}</td>
+                    <td><Image src={`data:image/png;base64, ${promotion.img}`} alt="Promotion imge" thumbnail /></td>
 
-                        <PromotionAddPromotionModal data={promotion} />
-                        {/* <EditMemberModal data={member} apiEdit={() => editMember(editList)} /> */}
-                        <Link href={`/promotion/edit/${promotion.id}`} className="mx-1 btn info icon icon-primary">
-                          <FaPen />
-                          <span className="h-tooltiptext">แก้ไขข้อมูล</span>
-                        </Link>
-                        <DeleteModal data={promotion} apiDelete={() => deletepromotion(promotion.id)} />
-                      </td>
-     
-      </tr>
-    ))}
-                     
-                      
+                    {/* <img src={promotion.img} alt="Promotion" /> */}
+                    
+
+
+
+                    <td> 
+                      <PromotionAddPromotionModal data={promotion} />
+                      {/* <EditMemberModal data={member} apiEdit={() => editMember(editList)} /> */}
+                      <Link href={`/promotion/edit/${promotion.id}`} className="mx-1 btn info icon icon-primary">
+                        <FaPen />
+                        <span className="h-tooltiptext">แก้ไขข้อมูล</span>
+                      </Link>
+                      <DeleteModal data={promotion} apiDelete={() => deletepromotion(promotion.id)} />
+                    </td>
+
+                  </tr>
+                ))}
+
+
               </tbody>
             </Table>
           </Card.Body>

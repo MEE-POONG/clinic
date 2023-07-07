@@ -207,7 +207,12 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
 
 
 
-
+                    <Link href="/article" className={asPath === "/article" ? "nav-link active" : "nav-link"}>
+                        <i >
+                            <FaTachometerAlt />
+                        </i>
+                        <span className="ms-2">Article</span>
+                    </Link>
 
 
 

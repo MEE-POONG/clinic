@@ -13,15 +13,11 @@ const PromotionAdd: React.FC = () => {
   const [title, settitle] = useState<string>("");
   const [subtitle, setsubtitle] = useState<string>("");
   const [detail, setdetail] = useState<string>("");
- /*const [lastname, setLastname] = useState<string>("");
-  const [bank, setBank] = useState<string>("เลือกธนาคาร");
-  const [bankAccount, setBankAccount] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
-  const [line, setLine] = useState<string>("");
-  const [email, setEmail] = useState<string>("");*/
+  const [img, setimg] = useState<string>("");
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
   const [checkBody, setCheckBody] = useState<string>("");
+ 
 
   const handleInputChange = (setter: any) => (event: any) => {
     const newValue = event.target.value;
@@ -43,6 +39,19 @@ const PromotionAdd: React.FC = () => {
     setCheckBody("");
   }
 
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        const splittedString = base64String.split(",")[1]; // ตัดส่วน "data:image/png;base64," ออก
+        setimg(splittedString);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     event.stopPropagation();
@@ -50,7 +59,7 @@ const PromotionAdd: React.FC = () => {
     if (!title) missingFields.push("title");
     if (!subtitle) missingFields.push("subtitle");
     if (!detail) missingFields.push("detail");
-    /*if (!img) missingFields.push("img");*/
+    // if (!img) missingFields.push("img");
     if (missingFields.length > 0) {
       setAlertForm("warning");
       setInputForm(true);
@@ -64,6 +73,7 @@ const PromotionAdd: React.FC = () => {
          title,
          subtitle,
          detail,
+         img,
          
         };
 
@@ -82,6 +92,8 @@ const PromotionAdd: React.FC = () => {
       }
     }
   };
+
+
   
   return (
     <LayOut>
@@ -139,8 +151,20 @@ const PromotionAdd: React.FC = () => {
                   />
                 </FloatingLabel>
               </Col>
-              
-             
+              <Col md={4}>
+                <FloatingLabel controlId="img" label="img / รูปภาพ" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && img !== ""}
+                    isInvalid={inputForm && img === ""}
+                    type="file"
+                    defaultValue={img}
+                    onChange={handleFileUpload}
+                    placeholder="img"/> 
+                </FloatingLabel>
+              </Col>
+
+
+               
             </Row>
           </Card.Body>
           <Card.Footer className="text-end">

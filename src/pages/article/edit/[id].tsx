@@ -9,21 +9,20 @@ import useAxios from "axios-hooks";
 import BankAccount from "@/components/Input/BankAccount";
 import Link from "next/link";
 import { bankMap } from '@/test';
-import { Promotion } from "@prisma/client";
+import { Article } from "@prisma/client";
 
 
 
-const PromotionAdd: React.FC = () => {
+const articleAdd: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
   const [
-    { loading: updatePromotionLoading, error: updatePromotionError },
-    executePromotionPut,
+    { loading: updatearticleLoading, error: updatearticleError },
+    executearticlePut,
   ] = useAxios({}, { manual: true });
   const [title, settitle] = useState<string>("");
-  const [subtitle, setsubtitle] = useState<string>("");
-  const [detail, setdetail] = useState<string>("");
   const [img, setimg] = useState<string>("");
+  const [detail, setdetail] = useState<string>("");
  /* const [img, setimg] = useState<string>("");*/
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
@@ -42,22 +41,22 @@ const PromotionAdd: React.FC = () => {
   };
 
   const [
-    { data: PromotionID, loading: PromotionIDLoading, error: PromotionIDError },
-    executePromotionID,
-  ] = useAxios<{ data: Promotion; success: boolean }, any>({
-    url: `/api/promotion/${id}`,
+    { data: articleID, loading: articleIDLoading, error: articleIDError },
+    executearticleID,
+  ] = useAxios<{ data: Article; success: boolean }, any>({
+    url: `/api/article/${id}`,
     method: "GET",
   }, { autoCancel: false, manual: true });
 
   useEffect(() => {
     if (id) {
-      executePromotionID().then(({ data }) => {
+      executearticleID().then(({ data }) => {
         if (data?.data) {
           settitle(data?.data?.title || "");
-          setsubtitle(data?.data?.subtitle || "")
-          setdetail(data?.data?.detail || "")
           setimg(data?.data?.img || "")
-         /* setBank(data?.data?.bank || "")
+          setdetail(data?.data?.detail || "")
+        /*  setimg(data?.data?.img || "")
+          setBank(data?.data?.bank || "")
           setBankAccount(data?.data?.bankAccount || "")
           setPhone(data?.data?.phone || "")
           setLine(data?.data?.line || "")
@@ -68,13 +67,13 @@ const PromotionAdd: React.FC = () => {
   }, [id]);
 
   const reloadPage = () => {
-    executePromotionID().then(({ data }) => {
+    executearticleID().then(({ data }) => {
       if (data?.data) {
         settitle(data?.data?.title || "");
-        setsubtitle(data?.data?.subtitle || "")
-        setdetail(data?.data?.detail || "")
         setimg(data?.data?.img || "")
-       /*setUsername(data?.data?.username || "");
+        setdetail(data?.data?.detail || "")
+       /* setimg(data?.data?.img || "")
+       setUsername(data?.data?.username || "");
         setPassword(data?.data?.password || "")
         setFirstname(data?.data?.firstname || "")
         setLastname(data?.data?.lastname || "")
@@ -104,10 +103,10 @@ const PromotionAdd: React.FC = () => {
     event.stopPropagation();
     let missingFields = [];
     if (!title) missingFields.push("title");
-    if (!subtitle) missingFields.push("subtitle");
-    if (!detail) missingFields.push("detail");
     if (!img) missingFields.push("img");
-    /*if (!phone) missingFields.push("phone");
+    if (!detail) missingFields.push("detail");
+  /*  if (!img) missingFields.push("img");
+    if (!phone) missingFields.push("phone");
     if (!bank) missingFields.push("bank");
     if (!bankAccount) missingFields.push("bankAccount");
     if (!line) missingFields.push("line");*/
@@ -122,15 +121,15 @@ const PromotionAdd: React.FC = () => {
 
         const data = {
           title,
-          subtitle,
-          detail,
           img,
+          detail,
+          /*img,*/
         };
 
 
         // Execute the update
-        const response = await executePromotionPut({
-          url: "/api/promotion/" + id,
+        const response = await executearticlePut({
+          url: "/api/article/" + id,
           method: "PUT",
           data
         });
@@ -160,12 +159,12 @@ const PromotionAdd: React.FC = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='Promotion-page'>
+      <div className='article-page'>
         <Card>
           <EditModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              Promotion - แก้ไขข้อมูล
+              article - แก้ไขข้อมูล
             </h4>
           </Card.Header>
           <Card.Body>
@@ -176,22 +175,24 @@ const PromotionAdd: React.FC = () => {
                     isValid={inputForm && title !== ""}
                     isInvalid={inputForm && title === ""}
                     type="text"
-                    value={title}
+                    defaultValue={title}
                     onChange={e => settitle(e.target.value)}
                     placeholder="name@example.com"
                   />
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="subtitle" label="subtitle / คำอธิบายย่อย" className="mb-3">
+                <FloatingLabel controlId="img" label="img / คำอธิบายย่อย" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && subtitle !== ""}
-                    isInvalid={inputForm && subtitle === ""}
-                    type="subtitle"
-                    value={subtitle}
-                    onChange={e => setsubtitle(e.target.value)}
-                    placeholder="subtitle"
-                  />
+                    isValid={inputForm && img !== ""}
+                    isInvalid={inputForm && img === ""}
+                    type="file"
+                    defaultValue={img}
+                    onChange={handleFileUpload}
+                    placeholder="img"
+                  /> 
+
+
                 </FloatingLabel>
               </Col>
               <Col md={4}>
@@ -200,22 +201,10 @@ const PromotionAdd: React.FC = () => {
                     isValid={inputForm && detail !== ""}
                     isInvalid={inputForm && detail === ""}
                     type="text"
-                    value={detail}
+                    defaultValue={detail}
                     onChange={e => setdetail(e.target.value)}
                     placeholder="detail"
                   />
-                </FloatingLabel>
-              </Col>
-
-               <Col md={4}>
-                <FloatingLabel controlId="img" label="img / รูปภาพ" className="mb-3">
-                  <Form.Control
-                    isValid={inputForm && img !== ""}
-                    isInvalid={inputForm && img === ""}
-                    type="file"
-                    defaultValue={img}
-                    onChange={handleFileUpload}
-                    placeholder="img"/> 
                 </FloatingLabel>
               </Col>
             
@@ -229,7 +218,7 @@ const PromotionAdd: React.FC = () => {
             <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
             </Button>
-            <Link href="/promotion" className="btn btn-danger mx-2">
+            <Link href="/article" className="btn btn-danger mx-2">
               ย้อนกลับ
             </Link>
           </Card.Footer>
@@ -238,7 +227,7 @@ const PromotionAdd: React.FC = () => {
     </LayOut >
   );
 }
-export default PromotionAdd;
+export default articleAdd;
 
 function setAlertForm(arg0: string) {
   throw new Error("Function not implemented.");
