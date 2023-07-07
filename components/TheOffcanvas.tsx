@@ -30,6 +30,8 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                         </i>
                         <span className="ms-2">Home</span>
                     </Link>
+
+
                     <div id="partner" className='select-page'>
                         <Dropdown.Toggle onClick={() => handlePath('/partner')} className={asPath === "/partner" || asPath === "/partner/agent" || asPath === "/partner/member" || asPath === "/partner/member/add" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
                             <i >
@@ -47,6 +49,27 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                             </Link>
                         </Dropdown.Menu>
                     </div>
+
+                    <div id="admin" className='select-page'>
+                        <Dropdown.Toggle onClick={() => handlePath('/admin')} className={asPath === "/admin" /*|| asPath === "/partner/agent"*/ || asPath === "/admin/user" /*|| asPath === "/partner/member/add*/ ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
+                            <i >
+                                <FaTachometerAlt />
+                            </i>
+                            <span className="ms-2">Admin</span>
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/admin" /*|| checkClickPath === "/partner/agent" */ || checkClickPath === "/admin/user" /*|| asPath === "/partner/member/add"*/} >
+                            <Link href="/admin" className={asPath === "/admin" /*|| asPath === "/partner/agent"*/ ? "nav-link active" : "nav-link"}>
+                                <span>Admin</span>
+                            </Link>
+                            <Link href="/admin/user" className={asPath === "/admin/user" /*|| asPath === "/partner/member/add"*/ ? "nav-link active" : "nav-link"}>
+                                <span>User</span>
+                            </Link>
+                        </Dropdown.Menu>
+                    </div>
+
+
+
                     <div id="bot-auto" className='select-page'>
                         <Dropdown.Toggle onClick={() => handlePath('/bot')} className={asPath === "/bot" || asPath === "/bot/agent" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
                             <i >

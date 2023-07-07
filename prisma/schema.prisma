@@ -10,20 +10,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Admin {
+model Adminmaster {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  adminusername String?
-  adminpassword String?
+  adminUsername String?
+  adminPassword String?
   sex           String?
   tel           String?
   email         String?
+  emailVerified Boolean?  @default(false)
   createdAt     DateTime? @default(now())
   updatedAt     DateTime? @updatedAt
   deleted_at    DateTime? @map("deleted_at")
+  User       User[]
 }
 
+
 model User {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
   fname      String?
   lname      String?
   nickname   String?
@@ -33,10 +36,13 @@ model User {
   email      String?
   line       String?
   tel        String?
-  createdAt  DateTime? @default(now())
-  updatedAt  DateTime? @updatedAt
-  deleted_at DateTime? @map("deleted_at")
+  createdAt          DateTime? @default(now())
+  updatedAt          DateTime? @updatedAt
+  deleted_at         DateTime? @map("deleted_at")
+  AdminmasterId           String?   @db.ObjectId
+  Adminmaster             Adminmaster?   @relation(fields: [AdminmasterId], references: [id])
 }
+
 
 model Contactclinic {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
@@ -165,3 +171,99 @@ model Article {
 //   adminId String @db.ObjectId
 //   admin Admin? @relation(fields: [adminId], references: [id])
 // }
+
+// model Member {
+//   id            String    @id @default(auto()) @map("_id") @db.ObjectId
+//   username      String?
+//   password      String?
+//   firstname     String?
+//   lastname      String?
+//   bankAccount   String?
+//   bank          String?
+//   phone         String?
+//   line          String?
+//   email         String?
+//   emailVerified Boolean?  @default(false)
+//   createdAt     DateTime? @default(now())
+//   updatedAt     DateTime? @updatedAt
+//   deleted_at    DateTime? @map("deleted_at")
+//   Partner       Partner[]
+// }
+
+// model Partner {
+//   id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+//   userAG             String?
+//   originAG           String?
+//   position           String?
+//   percent            Int?
+//   commission         Boolean?  @default(false)
+//   overdue            Boolean?  @default(false)
+//   adjustPercentage   Boolean?  @default(false)
+//   pay                Boolean?  @default(false)
+//   customerCommission Boolean?  @default(false)
+//   recommender        String?
+//   createdAt          DateTime? @default(now())
+//   updatedAt          DateTime? @updatedAt
+//   deleted_at         DateTime? @map("deleted_at")
+//   memberId           String?   @db.ObjectId
+//   member             Member?   @relation(fields: [memberId], references: [id])
+// }
+model Member {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  username      String?
+  password      String?
+  firstname     String?
+  lastname      String?
+  bankAccount   String?
+  bank          String?
+  phone         String?
+  line          String?
+  email         String?
+  emailVerified Boolean?  @default(false)
+  createdAt     DateTime? @default(now())
+  updatedAt     DateTime? @updatedAt
+  deleted_at    DateTime? @map("deleted_at")
+  Partner       Partner[]
+}
+
+model MinusIncome {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  negativeBalance Int?
+  transferOverdue Int?
+  pomotion        Int?
+  investment      Int?
+  createdAt       DateTime? @default(now())
+  updatedAt       DateTime? @updatedAt
+  deleted_at      DateTime? @map("deleted_at")
+}
+
+model Partner {
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  userAG             String?
+  originAG           String?
+  position           String?
+  percent            Int?
+  commission         Boolean?  @default(false)
+  overdue            Boolean?  @default(false)
+  adjustPercentage   Boolean?  @default(false)
+  pay                Boolean?  @default(false)
+  customerCommission Boolean?  @default(false)
+  recommender        String?
+  createdAt          DateTime? @default(now())
+  updatedAt          DateTime? @updatedAt
+  deleted_at         DateTime? @map("deleted_at")
+  memberId           String?   @db.ObjectId
+  member             Member?   @relation(fields: [memberId], references: [id])
+}
+
+model PastAG {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  online     Int?
+  comC       Int?
+  loseC      Int?
+  comM       Int?
+  loseM      Int?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  deleted_at DateTime? @map("deleted_at")
+}
