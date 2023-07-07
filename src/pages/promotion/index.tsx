@@ -37,7 +37,7 @@ const Promotion: React.FC = () => {
 
 
   useEffect(() => {
-    setFilteredpromotionsData(PromotionData?.data ?? []);
+    setFilteredpromotionsData(PromotionData?.promotion ?? []);
     console.log(PromotionData);
 
   }, [PromotionData]);
@@ -139,7 +139,7 @@ const Promotion: React.FC = () => {
 
                     <td> 
                       <PromotionAddPromotionModal data={promotion} />
-                      {/* <EditMemberModal data={member} apiEdit={() => editMember(editList)} /> */}
+                      {/* <EditpromotionModal data={promotion} apiEdit={() => editpromotion(editList)} /> */}
                       <Link href={`/promotion/edit/${promotion.id}`} className="mx-1 btn info icon icon-primary">
                         <FaPen />
                         <span className="h-tooltiptext">แก้ไขข้อมูล</span>

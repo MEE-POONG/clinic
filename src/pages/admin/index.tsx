@@ -7,11 +7,10 @@ import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
 import { bankMap } from "@/test";
-import PartnerViewpromotionModal from "@/container/Partner/ViewModal";
+import AdminmasterViewAdminmasterModal from "@/container/Adminmaster/ViewAdminmasterModal";
 import DeleteModal from "@/components/modal/DeleteModal";
-import PromotionAddPromotionModal from "@/container/Promotion/AddPromotion";
-import PartnerViewMemberModal from "@/container/Partner/ViewModal";
-import { Promotion, Adminmaster } from '@prisma/client';
+import AdminmasterAddAdminmasterModal from "@/container/Adminmaster/AddAdminmaster";
+import { Adminmaster } from '@prisma/client';
 
 interface Params {
   page: number;
@@ -137,23 +136,22 @@ const Adminmaster: React.FC = () => {
                     <td>{adminmaster.tel}</td>
                     <td>{adminmaster.email}</td>
                     {/* <td>{adminmaster.User}</td> */}
-                    <td>{adminmaster.sex}</td>
+                    {/* <td>{adminmaster.sex}</td> */}
                     {/* <td><Image src={`data:image/png;base64, ${adminmaster.img}`} alt="adminmaster imge" thumbnail /></td> */}
 
                     {/* <img src={promotion.img} alt="Promotion" /> */}
-                    
-
-
-
-                    {/* <td> 
-                      <PromotionAddPromotionModal data={adminmaster} />
-                      {/* <EditMemberModal data={member} apiEdit={() => editMember(editList)} /> */}
-                      {/* <Link href={`/promotion/edit/${adminmaster.id}`} className="mx-1 btn info icon icon-primary">
+                    <td> 
+                      <AdminmasterAddAdminmasterModal data={adminmaster} />
+                      {/* <EditpromotionModal data={promotion} apiEdit={() => editpromotion(editList)} /> */}
+                      <Link href={`/admin/editadminmaster/${adminmaster.id}`} className="mx-1 btn info icon icon-primary">
                         <FaPen />
                         <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                       </Link>
                       <DeleteModal data={adminmaster} apiDelete={() => deleteadminmaster(adminmaster.id)} />
-                    </td> */} 
+                    </td>
+
+
+
 
                   </tr>
                 ))}
