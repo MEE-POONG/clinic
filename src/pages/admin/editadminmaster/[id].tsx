@@ -24,7 +24,7 @@ const AdminmasterAdd: React.FC = () => {
   const [sex, setsex] = useState<string>("");
   const [tel, settel] = useState<string>("");
   const [email, setemail] = useState<string>("");
-  
+
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
   const [checkBody, setCheckBody] = useState<string>("");
@@ -42,7 +42,7 @@ const AdminmasterAdd: React.FC = () => {
     { data: AdminmasterID, loading: AdminmasterIDLoading, error: AdminmasterIDError },
     executeAdminmasterID,
   ] = useAxios<{ data: Adminmaster; success: boolean }, any>({
-    url: `/api/Adminmaster/${id}`,
+    url: `/api/adminmaster/${id}`,
     method: "GET",
   }, { autoCancel: false, manual: true });
 
