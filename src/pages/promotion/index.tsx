@@ -39,7 +39,7 @@ const Promotion: React.FC = () => {
 
 
   useEffect(() => {
-    setFilteredpromotionsData(PromotionData?.promotion ?? []);
+    setFilteredpromotionsData(PromotionData?.data ?? []);
     console.log(PromotionData);
 
   }, [PromotionData]);
