@@ -120,6 +120,7 @@ const Promotion: React.FC = () => {
                   <th>รายละเอียด</th>
                   <th>รูปภาพ</th>
                   <th>จัดการ</th>
+                  <th>จัดการ</th>
                 </tr>
               </thead>
 
