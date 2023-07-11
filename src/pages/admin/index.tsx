@@ -99,14 +99,14 @@ const Adminmaster: React.FC = () => {
               </InputGroup.Text>
               <Form.Control
                 onChange={e => handleChangeSearchTerm(e.target.value)}
-                placeholder="ค้นหาโปรโมชั่น"
+                placeholder="ค้นหายูเซอร์ แอดมิน"
                 aria-label="Fullname"
                 aria-describedby="basic-addon1"
               />
             </InputGroup>
             {/* <AddListName /> */}
-            <Link href="/promotion/addPromotion" className="ms-2 btn icon icofn-primary">
-              เพิ่มโปรโมชั่น
+            <Link href="/admin/addAdminmaster" className="ms-2 btn icon icofn-primary">
+              เพิ่มยูเซอร์ แอดมิน
             </Link>
           </Card.Header>
           <Card.Body className="p-0">

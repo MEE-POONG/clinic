@@ -104,6 +104,9 @@ const Promotion: React.FC = () => {
               />
             </InputGroup>
             {/* <AddListName /> */}
+            <Link href="/promotion/game" className="ms-2 btn icon icofn-primary">
+              เกมจับผิดภาพ
+            </Link>
             <Link href="/promotion/addPromotion" className="ms-2 btn icon icofn-primary">
               เพิ่มโปรโมชั่น
             </Link>

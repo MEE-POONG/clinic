@@ -244,7 +244,26 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
 
 
 
+                    <div id="gamepond" className='select-page'>
+                        <Dropdown.Toggle onClick={() => handlePath('/gamepond')} className={asPath === "/gamepond" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
+                            <i >
+                                <FaTachometerAlt />
+                            </i>
+                            <span className="ms-2">เกมของปอนด์</span>
+                        </Dropdown.Toggle>
 
+                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/gamepond" || checkClickPath === "/gamepond" } >
+                            <Link href="/gamepond/gameselet" className={asPath === "/gamepond/gameselet" || asPath === "/gamepond/gameselet" ? "nav-link active" : "nav-link"}>
+                                <span>รวมเกม</span>
+                            </Link>
+                            <Link href="/gamepond/xo" className={asPath === "/gamepond/xo" || asPath === "/gamepond/xo/add" ? "nav-link active" : "nav-link"}>
+                                <span>เกม XO</span>
+                            </Link>
+                            <Link href="/gamepond/calculator" className={asPath === "/gamepond/calculator" || asPath === "/gamepond/calculator/add" ? "nav-link active" : "nav-link"}>
+                                <span>เครื่องคิดเลข</span>
+                            </Link>
+                        </Dropdown.Menu>
+                    </div>
                 </Offcanvas.Body>
             </Offcanvas>
 

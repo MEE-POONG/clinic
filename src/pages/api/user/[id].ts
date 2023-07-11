@@ -15,6 +15,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     where: {
                         id: id as string,
                     },
+                    include: {
+                        Adminmaster : true,
+                    },
+
                 });
 
                 res.status(200).json(data);

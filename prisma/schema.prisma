@@ -11,31 +11,29 @@ datasource db {
 }
 
 model Adminmaster {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
   adminUsername String?
   adminPassword String?
   sex           String?
   tel           String?
   email         String?
-  User       User[]
+  User          User[]
 }
-
 
 model User {
-  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
-  fname      String?
-  lname      String?
-  nickname   String?
-  sex        String?
-  username   String?
-  password   String?
-  email      String?
-  line       String?
-  tel        String?
-  AdminmasterId           String?   @db.ObjectId
-  Adminmaster             Adminmaster?   @relation(fields: [AdminmasterId], references: [id])
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  fname           String?
+  lname           String?
+  nickname        String?
+  sex             String?
+  username        String?
+  password        String?
+  email           String?
+  line            String?
+  tel             String?
+  AdminmasterId   String?      @db.ObjectId
+  Adminmaster     Adminmaster? @relation(fields: [AdminmasterId], references: [id])
 }
-
 
 model Contactclinic {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
@@ -92,10 +90,9 @@ model Promotion {
   id       String    @id @default(auto()) @map("_id") @db.ObjectId
   title    String?
   subtitle String?
-  detail  String?
+  detail   String?
   img      String?
   date     DateTime?
-
 }
 
 model AboutClinic {

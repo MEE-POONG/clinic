@@ -8,22 +8,26 @@ import EditModal from "@/components/modal/EditModal";
 import useAxios from "axios-hooks";
 import Link from "next/link";
 import { bankMap } from '@/test';
-import { Adminmaster } from "@prisma/client";
+import { User } from "@prisma/client";
 
 
 
-const AdminmasterAdd: React.FC = () => {
+const UserAdd: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
   const [
-    { loading: updateAdminmasterLoading, error: updateAdminmasterError },
-    executeAdminmasterPut,
+    { loading: updateuserLoading, error: updateuserError },
+    executeuserPut,
   ] = useAxios({}, { manual: true });
-  const [adminUsername, setadminUsername] = useState<string>("");
-  const [adminPassword, setadminPassword] = useState<string>("");
+  const [fname, setfname] = useState<string>("");
+  const [lname, setlname] = useState<string>("");
+  const [nickname, setnickname] = useState<string>("");
   const [sex, setsex] = useState<string>("");
-  const [tel, settel] = useState<string>("");
+  const [username, setusername] = useState<string>("");
+  const [password, setpassword] = useState<string>("");
   const [email, setemail] = useState<string>("");
+  const [line, setline] = useState<string>("");
+  const [tel, settel] = useState<string>("");
 
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
@@ -39,35 +43,43 @@ const AdminmasterAdd: React.FC = () => {
   };
 
   const [
-    { data: AdminmasterID, loading: AdminmasterIDLoading, error: AdminmasterIDError },
-    executeAdminmasterID,
-  ] = useAxios<{ data: Adminmaster; success: boolean }, any>({
-    url: `/api/adminmaster/${id}`,
+    { data: userID, loading: userIDLoading, error: userIDError },
+    executeuserID,
+  ] = useAxios<{ data: User; success: boolean }, any>({
+    url: `/api/user/${id}`,
     method: "GET",
   }, { autoCancel: false, manual: true });
 
   useEffect(() => {
     if (id) {
-      executeAdminmasterID().then(({ data }) => {
+      executeuserID().then(({ data }) => {
         if (data?.data) {
-          setadminUsername(data?.data?.adminUsername || "");
-          setadminPassword(data?.data?.adminPassword || "")
+          setfname(data?.data?.fname || "");
+          setlname(data?.data?.lname || "")
+          setnickname(data?.data?.nickname || "")
           setsex(data?.data?.sex || "")
-          settel(data?.data?.tel || "")
+          setusername(data?.data?.username || "")
+          setpassword(data?.data?.password || "")
           setemail(data?.data?.email || "")
+          setline(data?.data?.line || "")
+          settel(data?.data?.tel || "")
         }
       });
     }
   }, [id]);
 
   const reloadPage = () => {
-    executeAdminmasterID().then(({ data }) => {
+    executeuserID().then(({ data }) => {
       if (data?.data) {
-        setadminUsername(data?.data?.adminUsername || "");
-        setadminPassword(data?.data?.adminPassword || "")
+        setfname(data?.data?.fname || "");
+        setlname(data?.data?.lname || "")
+        setnickname(data?.data?.nickname || "")
         setsex(data?.data?.sex || "")
-        settel(data?.data?.tel || "")
+        setusername(data?.data?.username || "")
+        setpassword(data?.data?.password || "")
         setemail(data?.data?.email || "")
+        setline(data?.data?.line || "")
+        settel(data?.data?.tel || "")
        /*setUsername(data?.data?.username || "");
         setPassword(data?.data?.password || "")
         setFirstname(data?.data?.firstname || "")
@@ -97,11 +109,15 @@ const AdminmasterAdd: React.FC = () => {
     event.preventDefault();
     event.stopPropagation();
     let missingFields = [];
-    if (!adminUsername) missingFields.push("adminUsername");
-    if (!adminPassword) missingFields.push("adminPassword");
+    if (!fname) missingFields.push("fname");
+    if (!lname) missingFields.push("lname");
+    if (!nickname) missingFields.push("nickname");
     if (!sex) missingFields.push("sex");
-    if (!tel) missingFields.push("tel");
+    if (!username) missingFields.push("username");
+    if (!password) missingFields.push("password");
     if (!email) missingFields.push("email");
+    if (!line) missingFields.push("line");
+    if (!tel) missingFields.push("tel");
   
 
     if (missingFields.length > 0) {
@@ -113,17 +129,22 @@ const AdminmasterAdd: React.FC = () => {
         setAlertForm("primary");
 
         const data = {
-          adminUsername,
-          adminPassword,
+          fname,
+          lname,
+          nickname,
           sex,
-          tel,
+          username,
+          password,
           email,
+          line,
+          tel,
+       
         };
 
 
         // Execute the update
-        const response = await executeAdminmasterPut({
-          url: "/api/adminmaster/" + id,
+        const response = await executeuserPut({
+          url: "/api/user/" + id,
           method: "PUT",
           data
         });
@@ -153,37 +174,49 @@ const AdminmasterAdd: React.FC = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='Adminmaster-page'>
+      <div className='user-page'>
         <Card>
           <EditModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              Adminmaster - แก้ไขข้อมูล
+              user - แก้ไขข้อมูล
             </h4>
           </Card.Header>
           <Card.Body>
             <Row>
               <Col md={4}>
-                <FloatingLabel controlId="adminUsername" label="adminUsername / ชื่อยูเซอร์เนม แอดมิน" className="mb-3">
+                <FloatingLabel controlId="fname" label="fname / ชื่อ" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && adminUsername !== ""}
-                    isInvalid={inputForm && adminUsername === ""}
+                    isValid={inputForm && fname !== ""}
+                    isInvalid={inputForm && fname === ""}
                     type="text"
-                    value={adminUsername}
-                    onChange={e => setadminUsername(e.target.value)}
-                    placeholder="name@example.com"
+                    value={fname}
+                    onChange={e => setfname(e.target.value)}
+                    placeholder="fname"
                   />
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="adminPassword" label="adminPassword / รหัสผ่าน แอดมิน" className="mb-3">
+                <FloatingLabel controlId="lname" label="lname / นามสกุล" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && adminPassword !== ""}
-                    isInvalid={inputForm && adminPassword === ""}
+                    isValid={inputForm && lname !== ""}
+                    isInvalid={inputForm && lname === ""}
                     type="text"
-                    value={adminPassword}
-                    onChange={e => setadminPassword(e.target.value)}
-                    placeholder="adminPassword"
+                    value={lname}
+                    onChange={e => setlname(e.target.value)}
+                    placeholder="lname"
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="nickname" label="nickname / ชื่อเล่น" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && nickname !== ""}
+                    isInvalid={inputForm && nickname === ""}
+                    type="text"
+                    value={nickname}
+                    onChange={e => setnickname(e.target.value)}
+                    placeholder="nickname"
                   />
                 </FloatingLabel>
               </Col>
@@ -200,14 +233,26 @@ const AdminmasterAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="tel" label="tel / เบอร์โทร" className="mb-3">
+                <FloatingLabel controlId="username" label="username / ยูเซอร์เนม" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && tel !== ""}
-                    isInvalid={inputForm && tel === ""}
+                    isValid={inputForm && username !== ""}
+                    isInvalid={inputForm && username === ""}
                     type="text"
-                    value={tel}
-                    onChange={e => settel(e.target.value)}
-                    placeholder="tel"
+                    value={username}
+                    onChange={e => setusername(e.target.value)}
+                    placeholder="username"
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="password" label="password / รหัสผ่าน" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && password !== ""}
+                    isInvalid={inputForm && password === ""}
+                    type="text"
+                    value={password}
+                    onChange={e => setpassword(e.target.value)}
+                    placeholder="password"
                   />
                 </FloatingLabel>
               </Col>
@@ -223,12 +268,30 @@ const AdminmasterAdd: React.FC = () => {
                   />
                 </FloatingLabel>
               </Col>
-
-
-
-
-
-
+              <Col md={4}>
+                <FloatingLabel controlId="line" label="line / ไอดีไลน์" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && line !== ""}
+                    isInvalid={inputForm && line === ""}
+                    type="text"
+                    value={line}
+                    onChange={e => setline(e.target.value)}
+                    placeholder="line"
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="tel" label="tel / เบอร์โทร" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && tel !== ""}
+                    isInvalid={inputForm && tel === ""}
+                    type="text"
+                    value={tel}
+                    onChange={e => settel(e.target.value)}
+                    placeholder="tel"
+                  />
+                </FloatingLabel>
+              </Col>
 
 
 
@@ -255,7 +318,7 @@ const AdminmasterAdd: React.FC = () => {
             <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
             </Button>
-            <Link href="/admin" className="btn btn-danger mx-2">
+            <Link href="/admin/user" className="btn btn-danger mx-2">
               ย้อนกลับ
             </Link>
           </Card.Footer>
@@ -264,7 +327,7 @@ const AdminmasterAdd: React.FC = () => {
     </LayOut >
   );
 }
-export default AdminmasterAdd;
+export default UserAdd;
 
 function setAlertForm(arg0: string) {
   throw new Error("Function not implemented.");
