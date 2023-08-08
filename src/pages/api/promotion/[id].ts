@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { method } = req;
 
+
     switch (method) {
         case 'GET':
             try {
@@ -22,6 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 res.status(500).json({ error: "An error occurred while fetching the data" });
             }
             break;
+
 
         case 'PUT':
             try {
